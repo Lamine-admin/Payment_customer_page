@@ -609,13 +609,12 @@ def main():
         st.markdown("### 📌 Guide Rapide")
         st.markdown("""
         1️⃣ **Recherche de votre réservation**
-        - Entrez la référence de votre réservation (Ex: LOC-P0001-2024-03-0001)
-        - Les détails s'afficheront automatiquement
-        
+        - Entrez la référence de votre réservation reçu par mail(Ex: LOC-P0001-2024-03-0001)
+        - Les détails s'afficheront automatiquement (moins d'une minute d'attente)
         2️⃣ **Vérification**
-        - Contrôlez les informations
-        
-        3️⃣ **Règlez votre réservation**
+        - Contrôlez les informations affichées
+
+        3️⃣ **Règlez votre réservation et votre assurance**
         - Cliquez sur les boutons de paiement
         - Les informations à fournir pour souscrire à l'assurance Cartage sont affichées dans les détails de la réservation
         
