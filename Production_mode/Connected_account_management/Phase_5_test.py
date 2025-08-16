@@ -20,6 +20,7 @@ import sys
 import logging
 import time
 from functools import lru_cache
+import shutil
 
 # 🔹 Configuration du logger
 logger = logging.getLogger("ConsoleLogger")
@@ -77,7 +78,11 @@ def get_browser():
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
         
-        # Utilise la détection automatique de la version
+        # Détection automatique du binaire Chromium
+        chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
+        if chromium_path:
+            options.binary_location = chromium_path
+
         service = Service(ChromeDriverManager().install())
         _driver = webdriver.Chrome(service=service, options=options)
         print("Navigateur initialisé avec succès")
@@ -118,7 +123,7 @@ def login_to_fleetee(_driver):  # Ajout du underscore pour éviter le hachage
 def fetch_reservation_details(reference):
     errors = []
     _driver = get_browser()
-    if _driver is None:
+    if (_driver is None):
         errors.append("Le service de récupération automatique est temporairement indisponible. Merci de contacter le support ou réessayer plus tard.")
         return None, errors
 
