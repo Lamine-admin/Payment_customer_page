@@ -68,19 +68,19 @@ except Exception as e:
 def get_browser():
     try:
         print("Initialisation du navigateur...")
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--disable-gpu')
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('--disable-extensions')
-        options.add_argument('--disable-infobars')
-        options.add_argument('--disable-notifications')
-        options.add_argument('--disable-popup-blocking')
-        options.add_argument('--disable-blink-features=AutomationControlled')
-        options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
-
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--window-size=1920,1080')
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--disable-infobars')
+        chrome_options.add_argument('--disable-notifications')
+        chrome_options.add_argument('--disable-popup-blocking')
+        chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+        chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
+        
         # Utiliser le service ChromeDriver avec la version spécifique
         service = Service(ChromeDriverManager().install())
         _driver = webdriver.Chrome(service=service, options=chrome_options)
@@ -88,19 +88,7 @@ def get_browser():
         return _driver
     except Exception as e:
         print(f"❌ Erreur d'initialisation du navigateur : {e}")
-        return None        
-    #     # Détection automatique du binaire Chromium
-    #     chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
-    #     if chromium_path:
-    #         options.binary_location = chromium_path
-
-    #     service = Service(ChromeDriverManager().install())
-    #     _driver = webdriver.Chrome(service=service, options=options)
-    #     print("Navigateur initialisé avec succès")
-    #     return _driver
-    # except Exception as e:
-    #     print(f"❌ Erreur d'initialisation du navigateur : {e}")
-    #     return None
+        return None
 
 # def get_browser():
 #     try:
