@@ -1,5 +1,7 @@
 import stripe
 import subprocess
+import requests
+import zipfile
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -108,20 +110,44 @@ def get_browser():
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
 
-        # 🔍 Détection automatique du binaire Chromium
+        # 🔍 Détection du binaire Chromium
         chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
         if not chromium_path:
-            print("❌ Chromium n'est pas installé ou introuvable")
+            print("❌ Chromium introuvable")
             return None
 
         options.binary_location = chromium_path
 
-        # 🔢 Récupération de la version principale de Chromium (ex: "120")
+        # 🔢 Récupération de la version principale
         version_output = subprocess.check_output([chromium_path, '--version']).decode('utf-8')
-        chromium_version = version_output.strip().split(' ')[1].split('.')[0]
+        full_version = version_output.strip().split(' ')[1]
+        major_version = full_version.split('.')[0]
+        print(f"Version Chromium détectée : {full_version}")
 
-        # 📥 Téléchargement du ChromeDriver correspondant
-        service = Service(ChromeDriverManager(version=chromium_version).install())
+        # 📥 Téléchargement du bon ChromeDriver
+        download_url = f"https://chromedriver.storage.googleapis.com/LATEST_RELEASE_{major_version}"
+        response = requests.get(download_url)
+        if response.status_code != 200:
+            print("❌ Impossible de récupérer la version de ChromeDriver")
+            return None
+
+        driver_version = response.text.strip()
+        zip_url = f"https://chromedriver.storage.googleapis.com/{driver_version}/chromedriver_linux64.zip"
+        zip_path = "/tmp/chromedriver.zip"
+        extract_path = "/tmp/chromedriver"
+
+        # Téléchargement et extraction
+        with open(zip_path, "wb") as f:
+            f.write(requests.get(zip_url).content)
+
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            zip_ref.extractall(extract_path)
+
+        chromedriver_path = os.path.join(extract_path, "chromedriver")
+        os.chmod(chromedriver_path, 0o755)
+
+        # 🚀 Lancement du navigateur
+        service = Service(chromedriver_path)
         _driver = webdriver.Chrome(service=service, options=options)
         print("✅ Navigateur initialisé avec succès")
         return _driver
