@@ -1,0 +1,6 @@
+streamlit==1.48.1
+selenium==4.35.0
+beautifulsoup4==4.13.4
+webdriver-manager==4.0.2
+python-decouple==3.8
+stripe==12.4.0 
