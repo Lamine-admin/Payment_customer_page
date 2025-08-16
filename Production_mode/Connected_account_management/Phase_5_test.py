@@ -78,7 +78,7 @@ def get_browser():
         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
         
         # Utilise la détection automatique de la version
-        service = Service(ChromeDriverManager().install())
+        service = Service(ChromeDriverManager(version="120.0.6099.224").install())
         _driver = webdriver.Chrome(service=service, options=options)
         print("Navigateur initialisé avec succès")
         return _driver
