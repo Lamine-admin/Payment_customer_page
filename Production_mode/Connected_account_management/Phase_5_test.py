@@ -1,4 +1,5 @@
 import stripe
+import subprocess
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -62,6 +63,35 @@ except Exception as e:
 
 # 🔹 Fonction pour initialiser le navigateur (mise en cache)
 @st.cache_resource
+# def get_browser():
+#     try:
+#         print("Initialisation du navigateur...")
+#         options = webdriver.ChromeOptions()
+#         options.add_argument('--headless')
+#         options.add_argument('--no-sandbox')
+#         options.add_argument('--disable-dev-shm-usage')
+#         options.add_argument('--disable-gpu')
+#         options.add_argument('--window-size=1920,1080')
+#         options.add_argument('--disable-extensions')
+#         options.add_argument('--disable-infobars')
+#         options.add_argument('--disable-notifications')
+#         options.add_argument('--disable-popup-blocking')
+#         options.add_argument('--disable-blink-features=AutomationControlled')
+#         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
+        
+#         # Détection automatique du binaire Chromium
+#         chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
+#         if chromium_path:
+#             options.binary_location = chromium_path
+
+#         service = Service(ChromeDriverManager().install())
+#         _driver = webdriver.Chrome(service=service, options=options)
+#         print("Navigateur initialisé avec succès")
+#         return _driver
+#     except Exception as e:
+#         print(f"❌ Erreur d'initialisation du navigateur : {e}")
+#         return None
+
 def get_browser():
     try:
         print("Initialisation du navigateur...")
@@ -77,16 +107,25 @@ def get_browser():
         options.add_argument('--disable-popup-blocking')
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
-        
-        # Détection automatique du binaire Chromium
-        chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
-        if chromium_path:
-            options.binary_location = chromium_path
 
-        service = Service(ChromeDriverManager().install())
+        # 🔍 Détection automatique du binaire Chromium
+        chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
+        if not chromium_path:
+            print("❌ Chromium n'est pas installé ou introuvable")
+            return None
+
+        options.binary_location = chromium_path
+
+        # 🔢 Récupération de la version principale de Chromium (ex: "120")
+        version_output = subprocess.check_output([chromium_path, '--version']).decode('utf-8')
+        chromium_version = version_output.strip().split(' ')[1].split('.')[0]
+
+        # 📥 Téléchargement du ChromeDriver correspondant
+        service = Service(ChromeDriverManager(version=chromium_version).install())
         _driver = webdriver.Chrome(service=service, options=options)
-        print("Navigateur initialisé avec succès")
+        print("✅ Navigateur initialisé avec succès")
         return _driver
+
     except Exception as e:
         print(f"❌ Erreur d'initialisation du navigateur : {e}")
         return None
