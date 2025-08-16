@@ -80,19 +80,27 @@ def get_browser():
         options.add_argument('--disable-popup-blocking')
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36')
-        
-        # Détection automatique du binaire Chromium
-        chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
-        if chromium_path:
-            options.binary_location = chromium_path
 
+        # Utiliser le service ChromeDriver avec la version spécifique
         service = Service(ChromeDriverManager().install())
-        _driver = webdriver.Chrome(service=service, options=options)
+        _driver = webdriver.Chrome(service=service, options=chrome_options)
         print("Navigateur initialisé avec succès")
         return _driver
     except Exception as e:
         print(f"❌ Erreur d'initialisation du navigateur : {e}")
-        return None
+        return None        
+    #     # Détection automatique du binaire Chromium
+    #     chromium_path = shutil.which("chromium") or shutil.which("chromium-browser")
+    #     if chromium_path:
+    #         options.binary_location = chromium_path
+
+    #     service = Service(ChromeDriverManager().install())
+    #     _driver = webdriver.Chrome(service=service, options=options)
+    #     print("Navigateur initialisé avec succès")
+    #     return _driver
+    # except Exception as e:
+    #     print(f"❌ Erreur d'initialisation du navigateur : {e}")
+    #     return None
 
 # def get_browser():
 #     try:
