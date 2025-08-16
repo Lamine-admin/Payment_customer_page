@@ -1,0 +1,6 @@
+# Connectez-vous à Exchange Online
+$UserCredential = Get-Credential
+Connect-ExchangeOnline -UserPrincipalName $UserCredential.UserName -Password $UserCredential.Password
+
+# Activer l'authentification SMTP pour un utilisateur spécifique
+Set-CASMailbox -Identity "user@domain.com" -SmtpClientAuthenticationDisabled $false
