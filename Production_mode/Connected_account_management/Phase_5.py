@@ -162,7 +162,14 @@ def main():
         page_icon="🚗",
         layout="wide"
     )
-
+    # 🔹 Bandeau image en haut de page
+    st.markdown("""
+    <div style="text-align:center; margin-bottom:1rem;">
+        <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" 
+             alt="Bandeau Malovelycar" 
+             style="width:70%; max-height:300px; object-fit:cover; border-radius:5px;">
+    </div>
+    """, unsafe_allow_html=True)
     # Style CSS personnalisé
     st.markdown("""
         <style>
@@ -228,12 +235,32 @@ def main():
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.markdown("""
-        <div style="text-align:center;">
-            <h1 style="margin-bottom:0.5em;">Malovelycar</h1>
-            <h2 style="margin-top:0;">Payer ma Réservation</h2>
-        </div>
-        <hr style="margin-top:1em;">
+        <style>
+            .responsive-title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: calc(1rem + 1.5vw);
+                max-width: 100%;
+                padding: 0.5rem;
+                box-sizing: border-box;
+                font-weight: bold;
+                color: #333;
+            }
+        
+            @media (max-width: 400px) {
+                .responsive-title {
+                    font-size: 0.9rem;
+                }
+            }
+        </style>
         """, unsafe_allow_html=True)
+        
+        # Afficher le texte
+        st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
         # st.title("Malovelycar  \nPayer ma Réservation")
         # st.markdown("---")
 
