@@ -87,7 +87,7 @@ def fetch_reservation_details(reference):
             errors.append("Connexion Fleetee échouée.")
             return None, errors
         _driver.get('https://app.fleetee.io/thecarsociety/bookings?page=0&limit=500')
-        time.sleep(5)
+        time.sleep(20)
         html = _driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
         span = soup.find('span', {'class': 'pointer table_row_link'}, string=reference)
@@ -151,51 +151,219 @@ def create_payment_link(reference, product_price, quantity, cartage_price, commi
         stripe_account=account['id']
     ).url
 
-# 🔹 Envoi de l’e-mail
-def send_payment_link(email, client_name, product_name, payment_link, product_price, car_identity, days_number, cartage_price, owner_info, start_date, end_date):
-    try:
-        if not email or "@" not in email:
-            print("Email invalide.")
-            return False
-        msg = MIMEMultipart()
-        msg['From'] = smtp_username
-        msg['To'] = email
-        msg['Subject'] = f"Malovelycar - {product_name} : Votre lien de paiement"
-        body = f"""<html><body><p>Bonjour <b>{client_name}</b>, ...</p></body></html>"""
-        msg.attach(MIMEText(body, 'html'))
-        server = smtplib.SMTP('smtp.office365.com', 587)
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        server.sendmail(smtp_username, email, msg.as_string())
-        server.quit()
-        return True
-    except Exception as e:
-        print(f"Erreur email : {e}")
-        return False
-
 # 🔹 Interface Streamlit
 def main():
-    st.set_page_config(page_title="Malovelycar - Payer ma Réservation", page_icon="🚗", layout="wide")
-    st.markdown("<style>/* Ton CSS ici */</style>", unsafe_allow_html=True)
+    # Configuration de la page
+    st.set_page_config(
+        page_title="Malovelycar - Payer ma Réservation",
+        page_icon="🚗",
+        layout="wide"
+    )
 
-    for key in ['reservation_details', 'payment_link', 'last_reference']:
-        st.session_state.setdefault(key, None)
+    # Style CSS personnalisé
+    st.markdown("""
+        <style>
+        .main {
+            padding: 2rem;
+        }
+        .stButton>button {
+            width: 100%;
+            border-radius: 5px;
+            height: 3em;
+            font-weight: bold;
+        }
+        .info-box {
+            background-color: #f0f2f6;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .success-box {
+            background-color: #d1e7dd;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        h1 {
+            color: #1E3C72;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            color: #2E5090;
+            margin: 1rem 0;
+        }
+        .step-box {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
+    # Initialisation des variables de session
+    if 'reservation_details' not in st.session_state:
+        st.session_state.reservation_details = None
+    if 'tenant_email' not in st.session_state:
+        st.session_state.tenant_email = None
+    if 'payment_link' not in st.session_state:
+        st.session_state.payment_link = None
+    if 'email_sent' not in st.session_state:
+        st.session_state.email_sent = False
+    if 'last_reference' not in st.session_state:
+        st.session_state.last_reference = None
+
+    # En-tête
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("""
+        <div style="text-align:center;">
+            <h1 style="margin-bottom:0.5em;">Malovelycar</h1>
+            <h2 style="margin-top:0;">Payer ma Réservation</h2>
+        </div>
+        <hr>
+        """, unsafe_allow_html=True)
+        # st.title("Malovelycar  \nPayer ma Réservation")
+        # st.markdown("---")
+
+    # Guide rapide dans la barre latérale
+    with st.sidebar:
+        st.markdown("### 📌 Guide Rapide")
+        st.markdown("""
+        1️⃣ **Recherche de votre réservation**
+        - Entrez la référence de votre réservation reçu par mail (Ex: LOC-P0001-2024-03-0001)
+        - Les détails s'afficheront automatiquement (moins d'une minute d'attente)
+                    
+        2️⃣ **Vérification**
+        - Contrôlez les informations affichées
+
+        3️⃣ **Règlez votre réservation et votre assurance**
+        - Cliquez sur les boutons de paiement
+        - Les informations à fournir pour souscrire à l'assurance Cartage sont affichées dans les détails de la réservation
+        
+        ❓ **Besoin d'aide ?**
+        - Email : contact@malovelycar.com
+        - Tél : +33 7 53 50 82 27
+        """)
+
+    # Section principale
     st.markdown("### 🔍 Recherche de votre Réservation")
-    reference = st.text_input("Entrez la référence :", value=st.session_state.last_reference or "")
+    with st.container():
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            reference = st.text_input(
+                "Entrez la référence de votre réservation :",
+                placeholder="Ex: LOC-P0001-2024-03-0001",
+                value=st.session_state.last_reference if st.session_state.last_reference else "",
+                help="Vous trouverez la référence dans l'email de demande de réservation"
+            )
+
     if reference:
         st.session_state.last_reference = reference
-        with st.spinner("Recherche en cours..."):
-            details, errors = fetch_reservation_details(reference)
-            if details:
-                st.session_state.reservation_details = details
-                st.write(details)
-                try:
-                    days = int(details.get('Durée', '0').replace(" jours", "").strip())
-                    cartage_price = days * 5
-                    raw_price = details.get('Balance', '0').replace("€", "").replace(",", ".").strip()
-                    product_price = abs(float(raw_price)) - cartage_price
-                    link = create_payment_link(reference, product_price, 1, cartage_price, 0.2)
-                    st.session_state.payment_link = link
-                    st.markdown(f"### 💳 Montant total à régler : {product_price + cartage_price:.2f} €")
-                    st.markdown(f"""<a href="{link}" target="_blank"><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo
+        
+        # Affichage du spinner pendant la recherche
+        with st.spinner("🔄 Recherche des détails de votre réservation (temps estimé : 1 minute)..."):
+            reservation_details, errors = fetch_reservation_details(reference)
+            
+            if reservation_details:
+                st.session_state.reservation_details = reservation_details
+                
+                # Vérification de la clé 'Propriétaire'
+                if "Propriétaire" not in reservation_details:
+                    print("⚠️ La clé 'Propriétaire' est absente des détails de réservation.")
+                else:
+                    print(f"Propriétaire : {reservation_details['Propriétaire']}")
+                
+                # Affichage des détails dans un conteneur stylisé
+                with st.container():
+                    st.markdown("### 📋 Détails de votre Réservation")
+                    with st.expander("Voir tous les détails", expanded=True):
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown("#### 🚘 Informations Principales")
+                            st.markdown(f"""
+                            - **Référence:** {reservation_details['Référence']}
+                            - **Statut:** {reservation_details['Statut']}
+                            - **Véhicule:** {reservation_details['Bien']}
+                            - **Propriétaire:** {reservation_details['Propriétaire']}
+                            - **Locataire:** {reservation_details['Locataire']}
+                            """)
+                        
+                        with col2:
+                            st.markdown("#### 📅 Détails de Location")
+                            st.markdown(f"""
+                            - **Début:** {reservation_details['Début']}
+                            - **Fin:** {reservation_details['Fin']}
+                            - **Durée:** {reservation_details['Durée']}
+                            - **Tarif:** {reservation_details['Tarif']}
+                            """)
+
+                # Création et envoi du lien de paiement
+                if st.session_state.reservation_details:
+                    # Nettoyer et convertir le tarif
+                    try:
+                        cartage_days_number = reservation_details.get('Durée', '0')
+                        car_identity = reservation_details.get('Bien', None)
+                        cleaned_cartage = cartage_days_number.replace(" jours", "").strip()
+                        days_number = int(cleaned_cartage)
+                        cartage_price = days_number * 5
+                        raw_price = reservation_details.get('Balance', '0')
+                        cleaned_price = raw_price.replace("€", "").replace(",", ".").strip()
+                        product_price_abs = float(cleaned_price)
+                        product_price = abs(product_price_abs) - cartage_price
+                        quantity = 1  # Quantité fixée à 1
+                        print(f"Le prix du produit est de {product_price:.2f} €")
+                    except ValueError as e:
+                        print(f"Erreur lors de la conversion du tarif : {e}")
+                        exit()
+
+                    # Créer le lien de paiement
+                    payment_link = create_payment_link(
+                        reference=reservation_details.get('Référence', 'Produit'),
+                        product_price=product_price,
+                        quantity=quantity,  # Quantité fixée à 1
+                        cartage_price=cartage_price,
+                        commission_rate=0.2
+                    )
+                    print(f"Lien de paiement généré : {payment_link}")
+
+                    if payment_link:
+                        st.session_state.payment_link = payment_link
+                        st.markdown(f"### Montant total à régler (réservation + assurance) : {abs(product_price + cartage_price):.2f} €")
+                        st.markdown(
+                            f'''
+                            <b> Montant de votre réservation : {product_price:.2f} €</b>
+                            <br>
+                            <a href="{payment_link}" target="_blank">
+                                <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
+                            </a>
+                                ''',
+                            unsafe_allow_html=True
+                        )
+                        st.markdown(
+                            f'''
+                            <b> Montant de votre assurance Cartage : {cartage_price:.2f} €</b>
+                            <br>
+                            <a href="https://app.cartage.club/subscription" target="_blank">
+                                <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
+                            </a>
+                            ''',
+                            unsafe_allow_html=True
+                        )
+            else:
+                st.error("❌ Aucune réservation trouvée avec cette référence")
+                if errors:
+                    for error in errors:
+                        st.warning(error)
+
+if __name__ == "__main__":
+    main()
