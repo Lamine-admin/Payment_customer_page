@@ -338,27 +338,34 @@ def main():
                     if payment_link:
                         st.session_state.payment_link = payment_link
                         st.markdown(f"### Montant total à régler (réservation + assurance) : {abs(product_price + cartage_price):.2f} €")
+
                         safe_payment_link = quote(payment_link, safe=':/?&=')
+
                         st.markdown(
                             f'''
                             <div style="margin-bottom:1em;">
-                                <strong>Montant de votre réservation : {product_price:.2f} €</strong><br>
-                                <a href="{safe_payment_link}" target="_blank">
-                                    <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
-                                </a>
+                                <div><strong>Montant de votre réservation : {product_price:.2f} €</strong></div>
+                                <div>
+                                    <a href="{safe_payment_link}" target="_blank">
+                                        <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
+                                    </a>
+                                </div>
                             </div>
                             ''',
                             unsafe_allow_html=True
                         )
+
                         st.markdown(
-                            f'''
+                            '''
                             <div style="margin-bottom:1em;">
-                                <strong>Montant de votre assurance Cartage : {cartage_price:.2f} €</strong><br>
-                                <a href="https://app.cartage.club/subscription" target="_blank">
-                                    <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
-                                </a>
+                                <div><strong>Montant de votre assurance Cartage : {:.2f} €</strong></div>
+                                <div>
+                                    <a href="https://app.cartage.club/subscription" target="_blank">
+                                        <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
+                                    </a>
+                                </div>
                             </div>
-                            ''',
+                            '''.format(cartage_price),
                             unsafe_allow_html=True
                         )
 
