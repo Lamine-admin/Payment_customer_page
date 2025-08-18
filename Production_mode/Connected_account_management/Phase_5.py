@@ -16,8 +16,11 @@ from functools import lru_cache
 import time
 import logging
 import sys
+from urllib.parse import quote
 
 from connected_accounts_list import connected_accounts
+
+
 
 # 🔹 Logger configuration
 logger = logging.getLogger("ConsoleLogger")
@@ -229,7 +232,7 @@ def main():
             <h1 style="margin-bottom:0.5em;">Malovelycar</h1>
             <h2 style="margin-top:0;">Payer ma Réservation</h2>
         </div>
-        <hr>
+        <hr style="margin-top:1em;">
         """, unsafe_allow_html=True)
         # st.title("Malovelycar  \nPayer ma Réservation")
         # st.markdown("---")
@@ -270,7 +273,7 @@ def main():
         st.session_state.last_reference = reference
         
         # Affichage du spinner pendant la recherche
-        with st.spinner("🔄 Recherche des détails de votre réservation (temps estimé : 1 minute)..."):
+        with st.spinner("Chargement des détails de votre réservation en cours (temps estimé : 30 secondes)..."):
             reservation_details, errors = fetch_reservation_details(reference)
             
             if reservation_details:
@@ -289,23 +292,19 @@ def main():
                         col1, col2 = st.columns(2)
                         
                         with col1:
-                            st.markdown("#### 🚘 Informations Principales")
-                            st.markdown(f"""
-                            - **Référence:** {reservation_details['Référence']}
-                            - **Statut:** {reservation_details['Statut']}
-                            - **Véhicule:** {reservation_details['Bien']}
-                            - **Propriétaire:** {reservation_details['Propriétaire']}
-                            - **Locataire:** {reservation_details['Locataire']}
-                            """)
-                        
+                            st.write("#### 🚘 Informations Principales")
+                            st.write(f"- **Référence :** {reservation_details['Référence']}")
+                            st.write(f"- **Statut :** {reservation_details['Statut']}")
+                            st.write(f"- **Véhicule :** {reservation_details['Bien']}")
+                            st.write(f"- **Propriétaire :** {reservation_details['Propriétaire']}")
+                            st.write(f"- **Locataire :** {reservation_details['Locataire']}")
+
                         with col2:
-                            st.markdown("#### 📅 Détails de Location")
-                            st.markdown(f"""
-                            - **Début:** {reservation_details['Début']}
-                            - **Fin:** {reservation_details['Fin']}
-                            - **Durée:** {reservation_details['Durée']}
-                            - **Tarif:** {reservation_details['Tarif']}
-                            """)
+                            st.write("#### 📅 Détails de Location")
+                            st.write(f"- **Début:** {reservation_details['Début']}")
+                            st.write(f"- **Fin:** {reservation_details['Fin']}")
+                            st.write(f"- **Durée:** {reservation_details['Durée']}")
+                            st.write(f"- **Tarif:** {reservation_details['Tarif']}")
 
                 # Création et envoi du lien de paiement
                 if st.session_state.reservation_details:
@@ -339,26 +338,30 @@ def main():
                     if payment_link:
                         st.session_state.payment_link = payment_link
                         st.markdown(f"### Montant total à régler (réservation + assurance) : {abs(product_price + cartage_price):.2f} €")
+                        safe_payment_link = quote(payment_link, safe=':/?&=')
                         st.markdown(
                             f'''
-                            <b> Montant de votre réservation : {product_price:.2f} €</b>
-                            <br>
-                            <a href="{payment_link}" target="_blank">
-                                <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
-                            </a>
-                                ''',
-                            unsafe_allow_html=True
-                        )
-                        st.markdown(
-                            f'''
-                            <b> Montant de votre assurance Cartage : {cartage_price:.2f} €</b>
-                            <br>
-                            <a href="https://app.cartage.club/subscription" target="_blank">
-                                <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
-                            </a>
+                            <div style="margin-bottom:1em;">
+                                <strong>Montant de votre réservation : {product_price:.2f} €</strong><br>
+                                <a href="{safe_payment_link}" target="_blank">
+                                    <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
+                                </a>
+                            </div>
                             ''',
                             unsafe_allow_html=True
                         )
+                        st.markdown(
+                            f'''
+                            <div style="margin-bottom:1em;">
+                                <strong>Montant de votre assurance Cartage : {cartage_price:.2f} €</strong><br>
+                                <a href="https://app.cartage.club/subscription" target="_blank">
+                                    <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
+                                </a>
+                            </div>
+                            ''',
+                            unsafe_allow_html=True
+                        )
+
             else:
                 st.error("❌ Aucune réservation trouvée avec cette référence")
                 if errors:
