@@ -138,7 +138,7 @@ def create_product_on_connected_account(product_name, product_price, connected_a
         return None
 
 # 🔹 Création du lien de paiement
-def create_payment_link(reference, product_price, quantity, cartage_price, commission_rate):
+def create_payment_link(reference, product_price, quantity, cartage_price, commission_rate=0.1):
     initials = get_seller_initials(reference)
     account = connected_accounts.get(initials)
     if not account:
@@ -250,7 +250,7 @@ def main():
                 font-weight: bold;
                 color: #333;
             }
-        
+
             @media (max-width: 400px) {
                 .responsive-title {
                     font-size: 0.9rem;
@@ -258,7 +258,7 @@ def main():
             }
         </style>
         """, unsafe_allow_html=True)
-        
+
         # Afficher le texte
         st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
         # st.title("Malovelycar  \nPayer ma Réservation")
@@ -358,7 +358,7 @@ def main():
                         product_price=product_price,
                         quantity=quantity,  # Quantité fixée à 1
                         cartage_price=cartage_price,
-                        commission_rate=0.2
+                        commission_rate=0.0
                     )
                     print(f"Lien de paiement généré : {payment_link}")
 
