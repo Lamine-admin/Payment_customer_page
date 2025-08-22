@@ -190,6 +190,7 @@ def main():
             width: 100%;
             height: 1em;
             margin: 2rem 0;
+            align-items: center;
         }  
                       
         /* Effet au survol */
