@@ -164,10 +164,10 @@ def main():
     )
     # 🔹 Bandeau image en haut de page
     st.markdown("""
-    <div style="text-align:center; margin-bottom:1rem;">
+    <div style="text-align:left; margin-bottom:1rem;">
         <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" 
              alt="Bandeau Malovelycar" 
-             style="width:70%; max-height:300px; object-fit:cover; border-radius:5px;">
+             style="width:25%; max-height:200px; object-fit:cover; border-radius:5px;">
     </div>
     """, unsafe_allow_html=True)
     # Style CSS personnalisé
@@ -176,11 +176,57 @@ def main():
         .main {
             padding: 2rem;
         }
-        .stButton>button {
+        /* Style du bouton principal */
+        .stButton > button {
+            background-color: #8F93FF !important;   /* Couleur de fond */
+            color: white !important;                /* Couleur du texte */
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 0.75rem 1.5rem !important;
+            font-weight: 600 !important;
+            font-size: 1.1rem !important;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             width: 100%;
+            height: 1em;
+            margin: 2rem 0;
+        }  
+                      
+        /* Effet au survol */
+        .stButton > button:hover {
+            background-color: #6C70E0 !important;
+            cursor: pointer;
+        }
+        
+        /* Effet au clic */
+        .stButton > button:active {
+            background-color: #4E52C0 !important;
+            transform: scale(0.98);
+        }
+                
+        /* Style général des champs de saisie */
+        input[type="text"] {
+            width: 600px;
+            background-color: white !important;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            padding: 6px;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+            max-width: 100%;
+            margin: auto;
+            display: block;
+        }
+                
+        # Zone de texte (multiligne)
+        .textarea {
+            width: 100%;
+            max-width: 90%;
+            padding: 0.5rem;
             border-radius: 5px;
-            height: 3em;
-            font-weight: bold;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            resize: vertical;
         }
         .info-box {
             background-color: #f0f2f6;
@@ -234,6 +280,7 @@ def main():
     # En-tête
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
+        # Titre responsive
         st.markdown("""
         <style>
             .responsive-title {
@@ -243,12 +290,14 @@ def main():
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                font-size: calc(1rem + 1.5vw);
+                font-size: calc(1rem + 0.5vw);
                 max-width: 100%;
                 padding: 0.5rem;
                 box-sizing: border-box;
                 font-weight: bold;
                 color: #333;
+                font-family: 'Roboto', sans-serif;
+                margin-bottom: -7rem;
             }
 
             @media (max-width: 400px) {
@@ -258,11 +307,6 @@ def main():
             }
         </style>
         """, unsafe_allow_html=True)
-
-        # Afficher le texte
-        st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
-        # st.title("Malovelycar  \nPayer ma Réservation")
-        # st.markdown("---")
 
     # Guide rapide dans la barre latérale
     with st.sidebar:
@@ -284,40 +328,77 @@ def main():
         - Tél : +33 7 53 50 82 27
         """)
 
-    # Section principale
-    st.markdown("### 🔍 Recherche de votre Réservation")
+    # 🔍 Section principale : Recherche de réservation
+    # st.markdown("### 🔍 Recherche de votre Réservation")
+    
     with st.container():
         col1, col2 = st.columns([3, 1])
         with col1:
-            reference = st.text_input(
-                "Entrez la référence de votre réservation :",
-                placeholder="Ex: LOC-P0001-2024-03-0001",
-                value=st.session_state.last_reference if st.session_state.last_reference else "",
-                help="Vous trouverez la référence dans l'email de demande de réservation"
-            )
 
-    if reference:
-        st.session_state.last_reference = reference
-        
-        # Affichage du spinner pendant la recherche
-        with st.spinner("Chargement des détails de votre réservation en cours (temps estimé : 30 secondes)..."):
-            reservation_details, errors = fetch_reservation_details(reference)
+
+            # Afficher le texte
+            st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <style>            
+                /* Centrage du formulaire */
+                .form-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: 1rem;
+                    padding: 0rem;
+                    margin: 2rem 0;
+                }
             
+                /* Effet halo au focus */
+                input[type="text"]:focus, textarea:focus {
+                    outline: none;
+                    border-color: #8F93FF;
+                    box-shadow: 0 0 8px 2px #8F93FF;
+                }
+                /* Réduction de l'espace entre les champs text_input */
+                div[data-testid="stTextInput"] {
+                    margin-bottom: -2rem;
+                }
+            </style>
+            """, unsafe_allow_html=True)
+            st.markdown('<div class="form-wrapper">', unsafe_allow_html=True)
+            reference = st.text_input(
+                label="",
+                placeholder="Saisissez la référence de votre réservation",
+                value=st.session_state.last_reference if st.session_state.last_reference else "",
+                help="Exemple : LOC-P0001-2024-03-0001"
+            )
+    
+            nom_famille = st.text_input(
+                label="",
+                placeholder="Saisissez votre nom de famille",
+                value=st.session_state.nom_famille if 'nom_famille' in st.session_state else ""
+            )
+    
+            # Bouton activé uniquement si les deux champs sont remplis
+            if reference.strip() and nom_famille.strip():
+                bouton_recherche = st.button("💳 Générer le lien de paiement")
+            else:
+                st.button("💳 Générer le lien de paiement", disabled=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+
+    if 'bouton_recherche' in locals() and bouton_recherche:
+        st.session_state.last_reference = reference
+        st.session_state.nom_famille = nom_famille
+
+        with st.spinner("Génération du lien de paiement en cours (temps estimé : 30 secondes)..."):
+            reservation_details, errors = fetch_reservation_details(reference)
+
             if reservation_details:
-                st.session_state.reservation_details = reservation_details
-                
-                # Vérification de la clé 'Propriétaire'
-                if "Propriétaire" not in reservation_details:
-                    print("⚠️ La clé 'Propriétaire' est absente des détails de réservation.")
-                else:
-                    print(f"Propriétaire : {reservation_details['Propriétaire']}")
-                
+                # Vérification du nom de famille
+                if nom_famille.lower() in reservation_details['Locataire'].lower():
+                    st.session_state.reservation_details = reservation_details
                 # Affichage des détails dans un conteneur stylisé
-                with st.container():
-                    st.markdown("### 📋 Détails de votre Réservation")
-                    with st.expander("Voir tous les détails", expanded=True):
+                    with st.container():
+                        st.markdown("### 📋 Détails de votre Réservation")
                         col1, col2 = st.columns(2)
-                        
+
                         with col1:
                             st.write("#### 🚘 Informations Principales")
                             st.write(f"- **Référence :** {reservation_details['Référence']}")
@@ -325,7 +406,6 @@ def main():
                             st.write(f"- **Véhicule :** {reservation_details['Bien']}")
                             st.write(f"- **Propriétaire :** {reservation_details['Propriétaire']}")
                             st.write(f"- **Locataire :** {reservation_details['Locataire']}")
-
                         with col2:
                             st.write("#### 📅 Détails de Location")
                             st.write(f"- **Début:** {reservation_details['Début']}")
@@ -333,74 +413,75 @@ def main():
                             st.write(f"- **Durée:** {reservation_details['Durée']}")
                             st.write(f"- **Tarif:** {reservation_details['Tarif']}")
 
-                # Création et envoi du lien de paiement
-                if st.session_state.reservation_details:
-                    # Nettoyer et convertir le tarif
-                    try:
-                        cartage_days_number = reservation_details.get('Durée', '0')
-                        car_identity = reservation_details.get('Bien', None)
-                        cleaned_cartage = cartage_days_number.replace(" jours", "").strip()
-                        days_number = int(cleaned_cartage)
-                        cartage_price = days_number * 5
-                        raw_price = reservation_details.get('Balance', '0')
-                        cleaned_price = raw_price.replace("€", "").replace(",", ".").strip()
-                        product_price_abs = float(cleaned_price)
-                        product_price = abs(product_price_abs) - cartage_price
-                        quantity = 1  # Quantité fixée à 1
-                        print(f"Le prix du produit est de {product_price:.2f} €")
-                    except ValueError as e:
-                        print(f"Erreur lors de la conversion du tarif : {e}")
-                        exit()
+                    # Création et envoi du lien de paiement
+                    if st.session_state.reservation_details:
+                        # Nettoyer et convertir le tarif
+                        try:
+                            cartage_days_number = reservation_details.get('Durée', '0')
+                            car_identity = reservation_details.get('Bien', None)
+                            cleaned_cartage = cartage_days_number.replace(" jours", "").strip()
+                            days_number = int(cleaned_cartage)
+                            cartage_price = days_number * 5
+                            raw_price = reservation_details.get('Balance', '0')
+                            cleaned_price = raw_price.replace("€", "").replace(",", ".").strip()
+                            product_price_abs = float(cleaned_price)
+                            product_price = abs(product_price_abs) - cartage_price
+                            quantity = 1  # Quantité fixée à 1
+                            print(f"Le prix du produit est de {product_price:.2f} €")
+                        except ValueError as e:
+                            print(f"Erreur lors de la conversion du tarif : {e}")
+                            exit()
 
-                    # Créer le lien de paiement
-                    payment_link = create_payment_link(
-                        reference=reservation_details.get('Référence', 'Produit'),
-                        product_price=product_price,
-                        quantity=quantity,  # Quantité fixée à 1
-                        cartage_price=cartage_price,
-                        commission_rate=0.0
-                    )
-                    print(f"Lien de paiement généré : {payment_link}")
-
-                    if payment_link:
-                        st.session_state.payment_link = payment_link
-                        st.markdown(f"### Montant total à régler (réservation + assurance) : {abs(product_price + cartage_price):.2f} €")
-
-                        safe_payment_link = quote(payment_link, safe=':/?&=')
-
-                        st.markdown(
-                            f'''
-                            <div style="margin-bottom:1em;">
-                                <div><strong>Montant de votre réservation : {product_price:.2f} €</strong></div>
-                                <div>
-                                    <a href="{safe_payment_link}" target="_blank">
-                                        <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
-                                    </a>
-                                </div>
-                            </div>
-                            ''',
-                            unsafe_allow_html=True
+                        # Créer le lien de paiement
+                        payment_link = create_payment_link(
+                            reference=reservation_details.get('Référence', 'Produit'),
+                            product_price=product_price,
+                            quantity=quantity,  # Quantité fixée à 1
+                            cartage_price=cartage_price,
+                            commission_rate=0.0
                         )
+                        print(f"Lien de paiement généré : {payment_link}")
 
-                        st.markdown(
-                            '''
-                            <div style="margin-bottom:1em;">
-                                <div><strong>Montant de votre assurance Cartage : {:.2f} €</strong></div>
-                                <div>
-                                    <a href="https://app.cartage.club/subscription" target="_blank">
-                                        <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
-                                    </a>
+                        if payment_link:
+                            st.session_state.payment_link = payment_link
+                            st.markdown(f"### Montant total à régler (réservation + assurance) : {abs(product_price + cartage_price):.2f} €")
+
+                            safe_payment_link = quote(payment_link, safe=':/?&=')
+
+                            st.markdown(
+                                f'''
+                                <div style="margin-bottom:1em;">
+                                    <div><strong>Montant de votre réservation : {product_price:.2f} €</strong></div>
+                                    <div>
+                                        <a href="{safe_payment_link}" target="_blank">
+                                            <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo.png" alt="Payer ma réservation" style="width:200px;height:auto;">
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            '''.format(cartage_price),
-                            unsafe_allow_html=True
-                        )
+                                ''',
+                                unsafe_allow_html=True
+                            )
 
+                            st.markdown(
+                                '''
+                                <div style="margin-bottom:1em;">
+                                    <div><strong>Montant de votre assurance Cartage : {:.2f} €</strong></div>
+                                    <div>
+                                        <a href="https://app.cartage.club/subscription" target="_blank">
+                                            <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_assurance_logo.png" alt="Payer mon assurance" style="width:200px;height:auto;">
+                                        </a>
+                                    </div>
+                                </div>
+                                '''.format(cartage_price),
+                                unsafe_allow_html=True
+                            )
+
+                else:
+                    st.error("❌ Le nom de famille ne correspond pas à la réservation.")
             else:
-                st.error("❌ Aucune réservation trouvée avec cette référence")
-                if errors:
-                    for error in errors:
-                        st.warning(error)
+                st.error("❌ Aucune réservation trouvée avec cette référence.")
+                for error in errors:
+                    st.warning(error)                
 
 if __name__ == "__main__":
     main()
