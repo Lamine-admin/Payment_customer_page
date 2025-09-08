@@ -154,6 +154,236 @@ def create_payment_link(reference, product_price, quantity, cartage_price, commi
         stripe_account=account['id']
     ).url
 
+# # 🔹 Interface Streamlit
+# def main():
+#     # Configuration de la page
+#     st.set_page_config(
+#         page_title="Malovelycar - Payer ma Réservation",
+#         page_icon="🚗",
+#         layout="wide"
+#     )
+#     # 🔹 Bandeau image en haut de page
+#     st.markdown("""
+#     <div style="text-align:left; margin-bottom:1rem;">
+#         <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" 
+#              alt="Bandeau Malovelycar" 
+#              style="width:40%; max-height:200px; object-fit:cover; border-radius:5px;">
+#     </div>
+#     """, unsafe_allow_html=True)
+#     # Style CSS personnalisé
+#     st.markdown("""
+#         <style>
+#         .main {
+#             padding: 2rem;
+#         }
+#         /* Style du bouton principal */
+#         .stButton > button {
+#             background-color: #8F93FF !important;   /* Couleur de fond */
+#             color: white !important;                /* Couleur du texte */
+#             border: none !important;
+#             border-radius: 8px !important;
+#             padding: 0.75rem 1.5rem !important;
+#             font-weight: 600 !important;
+#             font-size: 1.1rem !important;
+#             transition: background-color 0.3s ease, transform 0.1s ease;
+#             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+#             width: 100%;
+#             height: 1em;
+#             margin: 2rem 0;
+#             align-items: center;
+#         }  
+                      
+#         /* Effet au survol */
+#         .stButton > button:hover {
+#             background-color: #6C70E0 !important;
+#             cursor: pointer;
+#         }
+        
+#         /* Effet au clic */
+#         .stButton > button:active {
+#             background-color: #4E52C0 !important;
+#             transform: scale(0.98);
+#         }
+                
+#         /* Style général des champs de saisie */
+#         input[type="text"] {
+#             width: 600px;
+#             background-color: white !important;
+#             border: 2px solid #ccc;
+#             border-radius: 6px;
+#             padding: 6px;
+#             text-align: center;
+#             transition: box-shadow 0.3s ease;
+#             max-width: 100%;
+#             margin: auto;
+#             display: block;
+#         }
+                
+#         # Zone de texte (multiligne)
+#         .textarea {
+#             width: 100%;
+#             max-width: 90%;
+#             padding: 0.5rem;
+#             border-radius: 5px;
+#             border: 1px solid #ccc;
+#             font-size: 1rem;
+#             resize: vertical;
+#         }
+#         .info-box {
+#             background-color: #f0f2f6;
+#             padding: 1rem;
+#             border-radius: 5px;
+#             margin: 1rem 0;
+#         }
+#         .success-box {
+#             background-color: #d1e7dd;
+#             padding: 1rem;
+#             border-radius: 5px;
+#             margin: 1rem 0;
+#         }
+#         .warning-box {
+#             background-color: #fff3cd;
+#             padding: 1rem;
+#             border-radius: 5px;
+#             margin: 1rem 0;
+#         }
+#         h1 {
+#             color: #1E3C72;
+#             margin-bottom: 2rem;
+#         }
+#         h2 {
+#             color: #2E5090;
+#             margin: 1rem 0;
+#         }
+#         .step-box {
+#             border: 1px solid #e0e0e0;
+#             border-radius: 10px;
+#             padding: 1.5rem;
+#             margin: 1rem 0;
+#             background-color: white;
+#             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+#         }
+#         </style>
+#     """, unsafe_allow_html=True)
+
+#     # Initialisation des variables de session
+#     if 'reservation_details' not in st.session_state:
+#         st.session_state.reservation_details = None
+#     if 'tenant_email' not in st.session_state:
+#         st.session_state.tenant_email = None
+#     if 'payment_link' not in st.session_state:
+#         st.session_state.payment_link = None
+#     if 'email_sent' not in st.session_state:
+#         st.session_state.email_sent = False
+#     if 'last_reference' not in st.session_state:
+#         st.session_state.last_reference = None
+
+#     # En-tête
+#     col1, col2, col3 = st.columns([1, 2, 1])
+#     with col2:
+#         # Titre responsive
+#         st.markdown("""
+#         <style>
+#             .responsive-title {
+#                 display: flex;
+#                 justify-content: center;
+#                 align-items: center;
+#                 white-space: nowrap;
+#                 overflow: hidden;
+#                 text-overflow: ellipsis;
+#                 font-size: calc(1rem + 0.5vw);
+#                 max-width: 100%;
+#                 padding: 0.5rem;
+#                 box-sizing: border-box;
+#                 font-weight: bold;
+#                 color: #333;
+#                 font-family: 'Roboto', sans-serif;
+#                 margin-bottom: -7rem;
+#             }
+
+#             @media (max-width: 400px) {
+#                 .responsive-title {
+#                     font-size: 0.9rem;
+#                 }
+#             }
+#         </style>
+#         """, unsafe_allow_html=True)
+
+#     # Guide rapide dans la barre latérale
+#     with st.sidebar:
+#         st.markdown("### 📌 Guide Rapide")
+#         st.markdown("""
+#         1️⃣ **Recherche de votre réservation**
+#         - Entrez la référence de votre réservation reçu par mail (Ex: LOC-P0001-2024-03-0001)
+#         - Les détails s'afficheront automatiquement (moins d'une minute d'attente)
+                    
+#         2️⃣ **Vérification**
+#         - Contrôlez les informations affichées
+
+#         3️⃣ **Règlez votre réservation et votre assurance**
+#         - Cliquez sur les boutons de paiement
+#         - Les informations à fournir pour souscrire à l'assurance Cartage sont affichées dans les détails de la réservation
+        
+#         ❓ **Besoin d'aide ?**
+#         - Email : contact@malovelycar.com
+#         - Tél : +33 7 53 50 82 27
+#         """)
+
+#     # 🔍 Section principale : Recherche de réservation
+#     # st.markdown("### 🔍 Recherche de votre Réservation")
+    
+#     with st.container():
+#         col1, col2 = st.columns([3, 1])
+#         with col1:
+
+
+#             # Afficher le texte
+#             st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
+#             st.markdown("""
+#             <style>            
+#                 /* Centrage du formulaire */
+#                 .form-wrapper {
+#                     display: flex;
+#                     flex-direction: column;
+#                     align-items: center;
+#                     margin-top: 1rem;
+#                     padding: 0rem;
+#                     margin: 2rem 0;
+#                 }
+            
+#                 /* Effet halo au focus */
+#                 input[type="text"]:focus, textarea:focus {
+#                     outline: none;
+#                     border-color: #8F93FF;
+#                     box-shadow: 0 0 8px 2px #8F93FF;
+#                 }
+#                 /* Réduction de l'espace entre les champs text_input */
+#                 div[data-testid="stTextInput"] {
+#                     margin-bottom: -2rem;
+#                 }
+#             </style>
+#             """, unsafe_allow_html=True)
+#             st.markdown('<div class="form-wrapper">', unsafe_allow_html=True)
+#             reference = st.text_input(
+#                 label="Référence de réservation*",
+#                 placeholder="Exemple : LOC-P0001-2024-03-0001",
+#                 value=st.session_state.last_reference if st.session_state.last_reference else "",
+#                 help="la référence se trouve dans l'email de confirmation de réservation que vous avez reçu"
+#             )
+    
+#             nom_famille = st.text_input(
+#                 label="Nom de famille*",
+#                 placeholder="Exemple : Dupont",
+#                 value=st.session_state.nom_famille if 'nom_famille' in st.session_state else ""
+#             )
+    
+#             # Bouton activé uniquement si les deux champs sont remplis
+#             if reference.strip() and nom_famille.strip():
+#                 bouton_recherche = st.button("💳 Générer le lien de paiement")
+#             else:
+#                 st.button("💳 Générer le lien de paiement", disabled=True)
+#             st.markdown('</div>', unsafe_allow_html=True)
+
 # 🔹 Interface Streamlit
 def main():
     # Configuration de la page
@@ -162,24 +392,55 @@ def main():
         page_icon="🚗",
         layout="wide"
     )
+
     # 🔹 Bandeau image en haut de page
     st.markdown("""
     <div style="text-align:left; margin-bottom:1rem;">
         <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" 
              alt="Bandeau Malovelycar" 
-             style="width:25%; max-height:200px; object-fit:cover; border-radius:5px;">
+             style="width:40%; max-height:200px; object-fit:cover; border-radius:5px;">
     </div>
     """, unsafe_allow_html=True)
-    # Style CSS personnalisé
+
+    # Style CSS
     st.markdown("""
-        <style>
-        .main {
-            padding: 2rem;
+    <style>
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0rem;
+            margin: 2rem 0;
+            width: 100%;
         }
-        /* Style du bouton principal */
+        .form-wrapper label {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            display: block;
+            text-align: left;
+            width: 600px;
+            max-width: 100%;
+        }
+        .form-wrapper input[type="text"] {
+            width: 600px;
+            max-width: 100%;
+            background-color: white !important;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            padding: 6px;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #8F93FF;
+            box-shadow: 0 0 8px 2px #8F93FF;
+        }
         .stButton > button {
-            background-color: #8F93FF !important;   /* Couleur de fond */
-            color: white !important;                /* Couleur du texte */
+            background-color: #8F93FF !important;
+            color: white !important;
             border: none !important;
             border-radius: 8px !important;
             padding: 0.75rem 1.5rem !important;
@@ -188,96 +449,18 @@ def main():
             transition: background-color 0.3s ease, transform 0.1s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             width: 100%;
-            height: 1em;
             margin: 2rem 0;
-            align-items: center;
-        }  
-                      
-        /* Effet au survol */
+        }
         .stButton > button:hover {
             background-color: #6C70E0 !important;
             cursor: pointer;
         }
-        
-        /* Effet au clic */
         .stButton > button:active {
             background-color: #4E52C0 !important;
             transform: scale(0.98);
         }
-                
-        /* Style général des champs de saisie */
-        input[type="text"] {
-            width: 600px;
-            background-color: white !important;
-            border: 2px solid #ccc;
-            border-radius: 6px;
-            padding: 6px;
-            text-align: center;
-            transition: box-shadow 0.3s ease;
-            max-width: 100%;
-            margin: auto;
-            display: block;
-        }
-                
-        # Zone de texte (multiligne)
-        .textarea {
-            width: 100%;
-            max-width: 90%;
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-            resize: vertical;
-        }
-        .info-box {
-            background-color: #f0f2f6;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        .success-box {
-            background-color: #d1e7dd;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        .warning-box {
-            background-color: #fff3cd;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        h1 {
-            color: #1E3C72;
-            margin-bottom: 2rem;
-        }
-        h2 {
-            color: #2E5090;
-            margin: 1rem 0;
-        }
-        .step-box {
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
         </style>
-    """, unsafe_allow_html=True)
-
-    # Initialisation des variables de session
-    if 'reservation_details' not in st.session_state:
-        st.session_state.reservation_details = None
-    if 'tenant_email' not in st.session_state:
-        st.session_state.tenant_email = None
-    if 'payment_link' not in st.session_state:
-        st.session_state.payment_link = None
-    if 'email_sent' not in st.session_state:
-        st.session_state.email_sent = False
-    if 'last_reference' not in st.session_state:
-        st.session_state.last_reference = None
-
+     """, unsafe_allow_html=True)            
     # En-tête
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -308,7 +491,6 @@ def main():
             }
         </style>
         """, unsafe_allow_html=True)
-
     # Guide rapide dans la barre latérale
     with st.sidebar:
         st.markdown("### 📌 Guide Rapide")
@@ -329,64 +511,73 @@ def main():
         - Tél : +33 7 53 50 82 27
         """)
 
-    # 🔍 Section principale : Recherche de réservation
-    # st.markdown("### 🔍 Recherche de votre Réservation")
-    
-    with st.container():
-        col1, col2 = st.columns([3, 1])
-        with col1:
+    # Afficher le texte
+    st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
+    st.markdown("""
+    <style>            
+        /* Centrage du formulaire */
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0rem;
+            margin: 2rem 0;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
+    # Initialisation des variables
+    if 'last_reference' not in st.session_state:
+        st.session_state.last_reference = ""
+    if 'nom_famille' not in st.session_state:
+        st.session_state.nom_famille = ""
 
-            # Afficher le texte
-            st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
-            st.markdown("""
-            <style>            
-                /* Centrage du formulaire */
-                .form-wrapper {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    margin-top: 1rem;
-                    padding: 0rem;
-                    margin: 2rem 0;
-                }
-            
-                /* Effet halo au focus */
-                input[type="text"]:focus, textarea:focus {
-                    outline: none;
-                    border-color: #8F93FF;
-                    box-shadow: 0 0 8px 2px #8F93FF;
-                }
-                /* Réduction de l'espace entre les champs text_input */
-                div[data-testid="stTextInput"] {
-                    margin-bottom: -2rem;
-                }
-            </style>
-            """, unsafe_allow_html=True)
-            st.markdown('<div class="form-wrapper">', unsafe_allow_html=True)
-            reference = st.text_input(
-                label="",
-                placeholder="Saisissez la référence de votre réservation",
-                value=st.session_state.last_reference if st.session_state.last_reference else "",
-                help="Exemple : LOC-P0001-2024-03-0001"
-            )
-    
-            nom_famille = st.text_input(
-                label="",
-                placeholder="Saisissez votre nom de famille",
-                value=st.session_state.nom_famille if 'nom_famille' in st.session_state else ""
-            )
-    
-            # Bouton activé uniquement si les deux champs sont remplis
-            if reference.strip() and nom_famille.strip():
-                bouton_recherche = st.button("💳 Générer le lien de paiement")
-            else:
-                st.button("💳 Générer le lien de paiement", disabled=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+    # Formulaire
+    st.markdown('<div class="form-wrapper">', unsafe_allow_html=True)
 
-    if 'bouton_recherche' in locals() and bouton_recherche:
+    reference = st.text_input(
+        label="Référence de réservation*",
+        placeholder="Exemple : LOC-P0001-2024-03-0001",
+        value=st.session_state.last_reference,
+        help="La référence se trouve dans l'email de confirmation de réservation que vous avez reçu"
+    )
+
+    nom_famille = st.text_input(
+        label="Nom de famille*",
+        placeholder="Exemple : Dupont",
+        value=st.session_state.nom_famille
+    )
+
+    # Initialisation
+    if 'bouton_recherche' not in st.session_state:
+        st.session_state.bouton_recherche = False
+
+    # Bouton activé uniquement si les deux champs sont remplis
+    if (reference or "").strip() and (nom_famille or "").strip():
+        if st.button("💳 Générer le lien de paiement"):
+            st.session_state.bouton_recherche = True
+    else:
+        st.button("💳 Générer le lien de paiement", disabled=True)
+
+    # Traitement après clic
+    if st.session_state.bouton_recherche:
         st.session_state.last_reference = reference
         st.session_state.nom_famille = nom_famille
+
+    # # Bouton activé uniquement si les deux champs sont remplis
+    # if (reference or "").strip() and (nom_famille or "").strip():
+    #     if st.button("💳 Générer le lien de paiement"):
+    #         st.session_state.bouton_recherche = True
+    # else:
+    #     st.button("💳 Générer le lien de paiement", disabled=True)
+    # st.markdown('</div>', unsafe_allow_html=True)
+
+
+
+    # if st.session_state.bouton_recherche == True:
+    #     st.session_state.last_reference = reference
+    #     st.session_state.nom_famille = nom_famille
 
         with st.spinner("Génération du lien de paiement en cours (temps estimé : 30 secondes)..."):
             reservation_details, errors = fetch_reservation_details(reference)
@@ -478,9 +669,9 @@ def main():
                             )
 
                 else:
-                    st.error("❌ Le nom de famille ne correspond pas à la réservation.")
+                    st.error("❌ Votre réservation est introuvable. Veuillez vérifier les informations que vous avez saisies et réessayer.")
             else:
-                st.error("❌ Aucune réservation trouvée avec cette référence.")
+                st.error("❌ Votre réservation est introuvable. Veuillez vérifier les informations que vous avez saisies et réessayer.")
                 for error in errors:
                     st.warning(error)                
 
