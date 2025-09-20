@@ -178,14 +178,21 @@ def create_payment_link(reference, product_price, quantity, cartage_price, commi
         raise ValueError(f"Initiales inconnues : {initials}")
     price_id = create_product_on_connected_account(reference, product_price, account['id'])
     commission = int(product_price * quantity * commission_rate * 100)
-    cartage = int(cartage_price * 100)
     total_fee = commission
-    return stripe.PaymentLink.create(
-        line_items=[{'price': price_id, 'quantity': quantity}],
-        metadata={'product_name': reference, 'seller_initials': initials},
-        application_fee_amount=total_fee,
-        stripe_account=account['id']
-    ).url
+    try:
+        return stripe.PaymentLink.create(
+            line_items=[{'price': price_id, 'quantity': quantity}],
+            metadata={'product_name': reference, 'seller_initials': initials},
+            application_fee_amount=total_fee,
+            stripe_account=account['id']
+        ).url
+    except stripe.error.InvalidRequestError as e:
+        if "Must provide price or price_data" in str(e) or "Invalid non-negative integer" in str(e):
+            st.warning("ℹ️ Le paiement pour cette réservation a déjà été effectué ou le lien n'est plus valide.")
+            return None
+        else:
+            st.error(f"❌ Erreur Stripe : {e}")
+            return None
 
 def get_tenant_info(tenant_name):
     errors = []
@@ -473,24 +480,15 @@ def main():
                         </div>
                         ''', unsafe_allow_html=True)
 
-            with st.spinner("Génération des informations d'assurance Cartage à renseigner..."):
+            with st.spinner("Génération des informations de la protection Cartage à renseigner (temps estimé : 30 secondes)..."):
                 tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
 
                 if tenant_info:
                         cartage_start_url = "https://app.cartage.club/share?source=cartage-home-header"
-                        st.markdown("### 🔗 Protection sur-assurance Cartage")
+                        st.markdown("### 🔗 Formulaire protection sur-assurance Cartage")
                         st.markdown(f'''
                         <div style="border:1px solid #ccc; padding:1rem; border-radius:8px; background-color:#f9f9f9;">
-                            <p><strong>1. Cliquez sur le bouton ci-dessous pour accéder à Cartage :</strong></p>
-                            <div>
-                                <a href="{cartage_start_url}">
-                                    <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
-                                        Payer mon assurance Cartage
-                                    </button>
-                                </a>
-                            </div>
-                            <hr>
-                            <p><strong>2. Informations à renseigner :</strong></p>
+                            <p><strong>1. Informations à renseigner :</strong></p>
                             <ul>
                                 <li><strong>Infos Client :</strong>
                                     <ul>
@@ -522,6 +520,15 @@ def main():
                                 </li>
                             </ul>
                             <p><em>Ces informations vous seront demandées étape par étape sur Cartage.</em></p>
+                            <hr>
+                            <p><strong>2. Cliquez sur le bouton ci-dessous pour accéder au formulaire Cartage et payer votre protection :</strong></p>
+                            <div>
+                                <a href="{cartage_start_url}">
+                                    <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
+                                        Payer ma protection Cartage
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                         ''', unsafe_allow_html=True)
                 else:
