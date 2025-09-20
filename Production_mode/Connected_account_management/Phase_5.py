@@ -177,7 +177,7 @@ def create_payment_link(reference, product_price, quantity, cartage_price, commi
     if not account:
         raise ValueError(f"Initiales inconnues : {initials}")
     price_id = create_product_on_connected_account(reference, product_price, account['id'])
-    commission = int(product_price * quantity * commission_rate * 100)
+    commission = int(product_price * commission_rate * 100)
     cartage = int(cartage_price * 100)
     total_fee = commission + cartage
     return stripe.PaymentLink.create(
@@ -256,12 +256,13 @@ def main():
         layout="wide"
     )
 
-    # 🔹 Bandeau image
+
+
     st.markdown("""
     <div style="text-align:left; margin-bottom:1rem;">
         <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" 
              alt="Bandeau Malovelycar" 
-             style="width:40%; max-height:200px; object-fit:cover; border, unsafe_allow_html=True)
+             style="width:40%; max-height:200px; object-fit:cover; border: none;">
     </div>
     """, unsafe_allow_html=True)
 
@@ -322,12 +323,112 @@ def main():
             background-color: #4E52C0 !important;
             transform: scale(0.98);
         }
-        </style>
-     """, unsafe_allow_html=True)            
+    </style>
+    """, unsafe_allow_html=True)
+
     # En-tête
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
+        st.markdown("""
+        <style>
+            .responsive-title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: calc(1rem + 1.5vw);
+                max-width: 100%;
+                padding: 0.5rem;
+                box-sizing: border-box;
+                font-weight: bold;
+                color: #333;
+            }
+        
+            @media (max-width: 400px) {
+                .responsive-title {
+                    font-size: 0.9rem;
+                }
+            }
+        </style>
+        """, unsafe_allow_html=True)
+        
+        # Afficher le texte
         st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
+
+    # # 🔹 Bandeau image
+    # st.markdown("""
+    # <div style="text-align:left; margin-bottom:1rem;">
+    #     <img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" 
+    #          alt="Bandeau Malovelycar" 
+    #          style="width:40%; max-height:200px; object-fit:cover; border, unsafe_allow_html=True)
+    # </div>
+    # """, unsafe_allow_html=True)
+
+    # # Style CSS
+    # st.markdown("""
+    # <style>
+    #     .form-wrapper {
+    #         display: flex;
+    #         flex-direction: column;
+    #         align-items: center;
+    #         margin-top: 1rem;
+    #         padding: 0rem;
+    #         margin: 2rem 0;
+    #         width: 100%;
+    #     }
+    #     .form-wrapper label {
+    #         font-weight: bold;
+    #         margin-bottom: 0.3rem;
+    #         display: block;
+    #         text-align: left;
+    #         width: 600px;
+    #         max-width: 100%;
+    #     }
+    #     .form-wrapper input[type="text"] {
+    #         width: 600px;
+    #         max-width: 100%;
+    #         background-color: white !important;
+    #         border: 2px solid #ccc;
+    #         border-radius: 6px;
+    #         padding: 6px;
+    #         text-align: center;
+    #         transition: box-shadow 0.3s ease;
+    #         margin-bottom: 1rem;
+    #     }
+    #     input[type="text"]:focus {
+    #         outline: none;
+    #         border-color: #8F93FF;
+    #         box-shadow: 0 0 8px 2px #8F93FF;
+    #     }
+    #     .stButton > button {
+    #         background-color: #8F93FF !important;
+    #         color: white !important;
+    #         border: none !important;
+    #         border-radius: 8px !important;
+    #         padding: 0.75rem 1.5rem !important;
+    #         font-weight: 600 !important;
+    #         font-size: 1.1rem !important;
+    #         transition: background-color 0.3s ease, transform 0.1s ease;
+    #         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    #         width: 100%;
+    #         margin: 2rem 0;
+    #     }
+    #     .stButton > button:hover {
+    #         background-color: #6C70E0 !important;
+    #         cursor: pointer;
+    #     }
+    #     .stButton > button:active {
+    #         background-color: #4E52C0 !important;
+    #         transform: scale(0.98);
+    #     }
+    #     </style>
+    #  """, unsafe_allow_html=True)            
+    # # En-tête
+    # col1, col2, col3 = st.columns([1, 2, 1])
+    # with col2:
+    #     st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
 
     # 🔹 Sidebar
     with st.sidebar:
