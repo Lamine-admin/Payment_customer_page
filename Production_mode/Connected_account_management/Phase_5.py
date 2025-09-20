@@ -384,8 +384,18 @@ def main():
     if 'bouton_recherche' not in st.session_state:
         st.session_state.bouton_recherche = False
 
-    reference = st.text_input("Référence de réservation*", value=st.session_state.last_reference)
-    nom_famille = st.text_input("Nom de famille*", value=st.session_state.nom_famille)
+    reference = st.text_input(
+        label="Référence de réservation*",
+        placeholder="Exemple : LOC-P0001-2024-03-0001",
+        value=st.session_state.last_reference,
+        help="La référence se trouve dans l'email de confirmation que vous avez reçu"
+    )
+
+    nom_famille = st.text_input(
+        label="Nom de famille*",
+        placeholder="Exemple : Dupont",
+        value=st.session_state.nom_famille
+    )
 
     if reference.strip() and nom_famille.strip():
         if st.button("💳 Générer le lien de paiement"):
