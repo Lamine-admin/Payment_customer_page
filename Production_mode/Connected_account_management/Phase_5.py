@@ -177,9 +177,9 @@ def create_payment_link(reference, product_price, quantity, cartage_price, commi
     if not account:
         raise ValueError(f"Initiales inconnues : {initials}")
     price_id = create_product_on_connected_account(reference, product_price, account['id'])
-    commission = int(product_price * commission_rate * 100)
+    commission = int(product_price * quantity * commission_rate * 100)
     cartage = int(cartage_price * 100)
-    total_fee = commission + cartage
+    total_fee = commission
     return stripe.PaymentLink.create(
         line_items=[{'price': price_id, 'quantity': quantity}],
         metadata={'product_name': reference, 'seller_initials': initials},
@@ -446,7 +446,7 @@ def main():
                         product_price=product_price,
                         quantity=quantity,
                         cartage_price=cartage_price,
-                        commission_rate=0.0
+                        commission_rate=0.1
                     )
 
                     if payment_link:
