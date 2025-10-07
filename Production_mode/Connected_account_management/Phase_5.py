@@ -456,90 +456,86 @@ def main():
                         commission_rate=0.1
                     )
 
-                    if payment_link:
-                        st.session_state.payment_link = payment_link
-                        st.markdown(f"### Montant total à régler : {abs(product_price + cartage_price):.2f} €")
-                        safe_payment_link = quote(payment_link, safe=':/?&=')
+            if payment_link:
+                st.session_state.payment_link = payment_link
+                st.markdown(f"### Montant total à régler : {abs(product_price):.2f} €")
+                safe_payment_link = quote(payment_link, safe=':/?&=')
 
-                        st.markdown(f'''
-                        <div style="margin-bottom:1em;">
-                            <div><strong>Montant de votre réservation : {product_price:.2f} €</strong></div>
-                            <div>
-                                <a href="{safe_payment_link}" target="_blank">
-                                <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
-                                    Payer ma réservation
-                                </button>
-                                </a>
+                st.markdown(f'''
+                <div style="margin-bottom:1em;">
+                    <div>
+                        <a href="{safe_payment_link}" target="_blank">
+                        <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
+                            Payer ma réservation
+                        </button>
+                        </a>
+                    </div>
+                </div>
+                ''', unsafe_allow_html=True)
+
+                st.markdown("---")
+                st.markdown("### 🛡️ Souscrire à la protection Cartage ?")
+                st.markdown(f'''
+                            <div style="margin-bottom:1em;">
+                                <div><strong>Montant de votre protection Cartage : {cartage_price:.2f} €</strong></div>
                             </div>
-                        </div>
-                        ''', unsafe_allow_html=True)
+                            ''', unsafe_allow_html=True)
+                if st.button("Générer les informations pour Cartage"):
+                    with st.spinner("Génération des informations de la protection Cartage à renseigner (temps estimé : 30 secondes)..."):
+                        tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
 
-                        st.markdown(f'''
-                        <div style="margin-bottom:1em;">
-                            <div><strong>Montant de votre assurance Cartage : {cartage_price:.2f} €</strong></div>
-                        </div>
-                        ''', unsafe_allow_html=True)
-
-            with st.spinner("Génération des informations de la protection Cartage à renseigner (temps estimé : 30 secondes)..."):
-                tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
-
-                if tenant_info:
-                        cartage_start_url = "https://app.cartage.club/share?source=cartage-home-header"
-                        st.markdown("### 🔗 Formulaire protection sur-assurance Cartage")
-                        st.markdown(f'''
-                        <div style="border:1px solid #ccc; padding:1rem; border-radius:8px; background-color:#f9f9f9;">
-                            <p><strong>1. Informations à renseigner :</strong></p>
-                            <ul>
-                                <li><strong>Infos Client :</strong>
-                                    <ul>
-                                        <li>Prénom : {tenant_info['prenom']}</li>
-                                        <li>Nom : {tenant_info['nom']}</li>
-                                        <li>Email : {tenant_info['email']}</li>
-                                        <li>Date de naissance : {tenant_info['date_de_naissance']}</li>
-                                        <li>Téléphone : {tenant_info['telephone']}</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Infos Véhicule :</strong>
-                                    <ul>
-                                        <li>Plaque d'immatriculation : {reservation_details.get('Plaque', 'N/A')}</li>
-                                        <li>Marque : {reservation_details.get('Marque', 'N/A')}</li>
-                                        <li>Modèle : {reservation_details.get('Modèle', 'N/A')}</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Infos Propriétaire :</strong>
-                                    <ul>
-                                        <li>Prénom et NOM : {reservation_details['Propriétaire']}</li>
-                                        <li>Email : contact@malovelycar.com</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Infos Dates :</strong>
-                                    <ul>
-                                        <li>Début : {reservation_details['Début']}</li>
-                                        <li>Durée : {reservation_details['Durée']}</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <p><em>Ces informations vous seront demandées étape par étape sur Cartage.</em></p>
-                            <hr>
-                            <p><strong>2. Cliquez sur le bouton ci-dessous pour accéder au formulaire Cartage et payer votre protection :</strong></p>
-                            <div>
-                                <a href="{cartage_start_url}">
-                                    <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
-                                        Payer ma protection Cartage
-                                    </button>
-                                </a>
+                        if tenant_info:
+                            cartage_start_url = "https://app.cartage.club/share?source=cartage-home-header"
+                            st.markdown("### 🔗 Formulaire protection sur-assurance Cartage")
+                            st.markdown(f'''
+                            <div style="border:1px solid #ccc; padding:1rem; border-radius:8px; background-color:#f9f9f9;">
+                                <p><strong>1. Informations à renseigner :</strong></p>
+                                <ul>
+                                    <li><strong>Infos Client :</strong>
+                                        <ul>
+                                            <li>Prénom : {tenant_info['prenom']}</li>
+                                            <li>Nom : {tenant_info['nom']}</li>
+                                            <li>Email : {tenant_info['email']}</li>
+                                            <li>Date de naissance : {tenant_info['date_de_naissance']}</li>
+                                            <li>Téléphone : {tenant_info['telephone']}</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Infos Véhicule :</strong>
+                                        <ul>
+                                            <li>Plaque d'immatriculation : {reservation_details.get('Plaque', 'N/A')}</li>
+                                            <li>Marque : {reservation_details.get('Marque', 'N/A')}</li>
+                                            <li>Modèle : {reservation_details.get('Modèle', 'N/A')}</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Infos Propriétaire :</strong>
+                                        <ul>
+                                            <li>Prénom et NOM : {reservation_details['Propriétaire']}</li>
+                                            <li>Email : contact@malovelycar.com</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Infos Dates :</strong>
+                                        <ul>
+                                            <li>Début : {reservation_details['Début']}</li>
+                                            <li>Durée : {reservation_details['Durée']}</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <p><em>Ces informations vous seront demandées étape par étape sur Cartage.</em></p>
+                                <hr>
+                                <p><strong>2. Cliquez sur le bouton ci-dessous pour accéder au formulaire Cartage et payer votre protection :</strong></p>
+                                <div>
+                                    <a href="{cartage_start_url}">
+                                        <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
+                                            Payer ma protection Cartage
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        ''', unsafe_allow_html=True)
-                else:
-                        st.error("❌ Impossible de récupérer les informations du client.")
-                        for err in info_errors:
-                            st.warning(err)
-
+                            ''', unsafe_allow_html=True)
                         else:
-                            st.error("❌ Votre réservation est introuvable. Veuillez vérifier les informations que vous avez saisies et réessayer.")
-                            for error in errors:
-                                st.warning(error)
+                            st.error("❌ Impossible de récupérer les informations du client.")
+                            for err in info_errors:
+                                st.warning(err)
 
 if __name__ == "__main__":
     main()
