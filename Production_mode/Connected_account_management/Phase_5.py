@@ -442,7 +442,7 @@ def main():
                     try:
                         days_number = int(reservation_details['Durée'].replace(" jours", "").strip())
                         cartage_price = days_number * 5
-                        product_price = abs(float(reservation_details['Balance'].replace("€", "").replace(",", ".").strip())) - cartage_price
+                        product_price = abs(float(reservation_details['Balance'].replace("€", "").replace(",", ".").strip()))
                         quantity = 1
                     except ValueError as e:
                         st.error(f"Erreur lors du calcul du tarif : {e}")
