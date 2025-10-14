@@ -450,7 +450,7 @@ def main():
 
                     payment_link = create_payment_link(
                         reference=reservation_details['Référence'],
-                        product_price=product_price,
+                        product_price=product_price - cartage_price,
                         quantity=quantity,
                         cartage_price=cartage_price,
                         commission_rate=0.1
@@ -458,7 +458,7 @@ def main():
 
             if payment_link:
                 st.session_state.payment_link = payment_link
-                st.markdown(f"### Montant total à régler : {abs(product_price):.2f} €")
+                st.markdown(f"### Montant de la réservation à régler : {abs(product_price- cartage_price):.2f} €")
                 safe_payment_link = quote(payment_link, safe=':/?&=')
 
                 st.markdown(f'''
@@ -474,14 +474,14 @@ def main():
                 ''', unsafe_allow_html=True)
 
                 st.markdown("---")
-                st.markdown("### 🛡️ Souscrire à la protection Cartage ?")
+                st.markdown("### 🛡️ Souscrire à la protection complète Cartage ?")
                 st.markdown(f'''
                             <div style="margin-bottom:1em;">
-                                <div><strong>Montant de votre protection Cartage : {cartage_price:.2f} €</strong></div>
+                                <div><strong>Montant de votre protection complète Cartage : {cartage_price:.2f} €</strong></div>
                             </div>
                             ''', unsafe_allow_html=True)
-                if st.button("Générer les informations pour Cartage"):
-                    with st.spinner("Génération des informations de la protection Cartage à renseigner (temps estimé : 30 secondes)..."):
+                if st.button("Générer les informations à renseigner pour votre protection complète Cartage"):
+                    with st.spinner("Génération des informations de la protection complète Cartage à renseigner (temps estimé : 30 secondes)..."):
                         tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
 
                         if tenant_info:
