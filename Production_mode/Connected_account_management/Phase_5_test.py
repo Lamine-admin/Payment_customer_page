@@ -609,8 +609,10 @@ def main():
         st.markdown("### 📌 Guide Rapide")
         st.markdown("""
         1️⃣ **Recherche de votre réservation**
-        - Entrez la référence de votre réservation reçu par mail(Ex: LOC-P0001-2024-03-0001)
+        - Entrez la référence de votre réservation reçu par mail (Ex: LOC-P0001-2024-03-0001)
         - Les détails s'afficheront automatiquement (moins d'une minute d'attente)
+        - Si vous ne trouvez pas votre réservation, contactez-nous à l'adresse email ci-dessous
+                    
         2️⃣ **Vérification**
         - Contrôlez les informations affichées
 
