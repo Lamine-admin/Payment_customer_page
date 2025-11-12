@@ -173,10 +173,10 @@ def create_product_on_connected_account(product_name, product_price, connected_a
 # 🔹 Création du lien de paiement
 def create_payment_link(reference, product_price, quantity, cartage_price, commission_rate=0.1):
     initials = get_seller_initials(reference)
-    account = connected_accounts.get(initials)
-    if not account:
-        raise ValueError(f"Initiales inconnues : {initials}")
-    price_id = create_product_on_connected_account(reference, product_price, account['id'])
+    account = st.secrets["connected_accounts"][initials]
+    account_id = account["id"]
+    account_email = account["email"]
+    price_id = create_product_on_connected_account(reference, product_price, account_id)
     commission = int(product_price * quantity * commission_rate * 100)
     total_fee = commission
     try:
@@ -184,7 +184,7 @@ def create_payment_link(reference, product_price, quantity, cartage_price, commi
             line_items=[{'price': price_id, 'quantity': quantity}],
             metadata={'product_name': reference, 'seller_initials': initials},
             application_fee_amount=total_fee,
-            stripe_account=account['id']
+            stripe_account=account_id
         ).url
     except stripe.error.InvalidRequestError as e:
         if "Must provide price or price_data" in str(e) or "Invalid non-negative integer" in str(e):
@@ -525,7 +525,7 @@ def main():
                                 <p><strong>2. Cliquez sur le bouton ci-dessous pour accéder au formulaire Cartage et payer votre protection :</strong></p>
                                 <div>
                                     <a href="{cartage_start_url}">
-                                        <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
+                                        <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:8px; font-size:1rem; font-weight:bold; cursor:pointer;">
                                             Payer ma protection Cartage
                                         </button>
                                     </a>
