@@ -19,7 +19,7 @@ import logging
 import sys
 from urllib.parse import quote
 
-from connected_accounts_list import connected_accounts
+# from connected_accounts_list import connected_accounts
 
 
 
