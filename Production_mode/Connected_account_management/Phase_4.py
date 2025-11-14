@@ -34,8 +34,8 @@ print = logger.info
 # 🔹 API Keys
 try:
     stripe.api_key = config('STRIPE_API_KEY')
-    smtp_username = config('SMTP_USERNAME')
-    smtp_password = config('SMTP_PASSWORD')
+    smtp_username = config('SMTP_USERNAME_TLC')
+    smtp_password = config('SMTP_PASSWORD_TLC')
     fleetee_username = config('FLEETEE_USERNAME')
     fleetee_password = config('FLEETEE_PASSWORD')
 except Exception:
@@ -269,8 +269,8 @@ def send_payment_link(email, client_name, product_name, payment_link, product_pr
     smtp_server = 'smtp.office365.com'
     smtp_port = 587
     total_price = abs(product_price) + cartage_price  # Calcul de la différence
-    smtp_username = config('SMTP_USERNAME')
-    smtp_password = config('SMTP_PASSWORD')
+    smtp_username = config('SMTP_USERNAME_TLC')
+    smtp_password = config('SMTP_PASSWORD_TLC')
 
     try:
         # Vérification de l'adresse e-mail avant l'envoi
@@ -281,30 +281,24 @@ def send_payment_link(email, client_name, product_name, payment_link, product_pr
         msg = MIMEMultipart()
         msg['From'] = smtp_username
         msg['To'] = email
-        msg['Subject'] = f"Malovelycar - {product_name} : Votre lien de paiement"
+        msg['Subject'] = f"Thecarsociety - {product_name} : Votre lien de paiement"
 
         # Contenu de l'e-mail
         body = f"""
         <html>
         <body>
-            <p><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Background.JPG" alt="Background" style="width:800px;height:auto;"></p>
+            <p><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Banniere_thecarsociety.png" alt="Background" style="width:800px;height:auto;"></p>
             <p>Bonjour <b>{client_name}</b>,</p>
-            <p>Merci d'avoir choisi Malovelycar !</p>
-            <p>Le montant total à régler (réservation + assurance) est de : <b>{total_price:.2f} €</b>.</p>
+            <p>Merci d'avoir choisi Thecarsociety pour le paiement de votre réservation !</p>
             <p>Cliquez sur "Payer ma réservation" pour effectuer le paiement de <b>{product_price:.2f} €</b> de votre réservation n°<b>{product_name}</b> du véhicule <b>{car_identity}</b> du <b>{owner_info}</b> :</p>
             <p><a href="{payment_link}"><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_reservation_logo_new.png" alt="Lien de paiement" style="width:200px;height:auto;"></a></p>
-            <p>Pour payer votre protection Cartage d'un montant de <b>{cartage_price:.2f} €</b>, renseignez les informations ci-dessous, puis cliquez sur "Payer ma protection" (temps estimé : 2 minutes) :</p>
-            <p>1. Votre email ;</p>
-            <p>2. Vos infos personnelles (prénom, nom, date de naissance, email et code postale) ;</p>
-            <p>3. La plaque d'immatriculation du véhicule loué : <b>{car_identity}</b> ;</p>
-            <p>4. Les infos du propriétaire (mail : <b>contact@malovelycar.com</b>, Prénom et NOM : <b>{owner_info}</b>) ;</p>
-            <p>5. Les dates d'utilisation : du <b>{start_date}</b> au <b>{end_date}</b> ;</p>
-            <p>6. Signez puis payez.</p>
+            <p>Pour finir, vous pouvez souscrire à la complémentaire d'assurance CARTAGE à 5€/jour afin de n'avoir aucune franchise à payer en cas de sinistre. Cliquez sur "Payer ma protection" et suivez les étapes indiquées :</p>
             <p><a href=" https://app.cartage.club/subscription"><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Payer_protection_logo_new.png" alt="Lien de paiement" style="width:200px;height:auto;"></a></p>
+            <p>(Contactez le propriétaire du véhicule pour obtenir son adresse email ainsi que la plaque d'immatriculation de son véhicule)</p>
             <p>Merci de votre confiance !</p>
             <p>Cordialement,</p>
-            <p>L'équipe Malovelycar</p>
-            <p><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Logos_MLC_TLC_combinés_2.PNG" alt="Logo Malovelycar" style="width:150px;height:auto;"></p>
+            <p>L'équipe Thecarsociety</p>
+            <p><img src="https://raw.githubusercontent.com/Lamine-admin/Thecarsociety_images/main/Thecarsociety_logo.png" alt="Logo Thecarsociety" style="width:150px;height:auto;"></p>
         </body>
         </html>
         """
@@ -528,16 +522,14 @@ def main():
                         cartage_price=cartage_price,
                         commission_rate=0.0
                     )
-                    print(f"Lien de paiement généré : {payment_link}")
 
-            if payment_link:
-                        st.session_state.payment_link = payment_link
-                        st.markdown(f"### 🎯 Lien de Paiement Généré : [Cliquez ici]({payment_link})")
+                    st.session_state.payment_link = payment_link
+                    st.markdown(f"### 🎯 Lien de Paiement Généré : [Cliquez ici]({payment_link})", help="Vous pouvez copier le lien de paiement et le partager directement à votre locataire")
                         # Section d'envoi d'email
-                        st.markdown("### 📤 Envoi du Lien de Paiement")
-                        st.info("ℹ️ Le lien de paiement est prêt à être envoyé au locataire.")
+                        # st.markdown("### 📤 Envoi du Lien de Paiement")
+                    st.info("ℹ️ Assurez-vous que le lien de paiement est correct avant de l'envoyer.")
 
-                        if st.button("📤 Envoyer le lien au locataire", key="send_email", help="Cliquez pour envoyer le lien de paiement par email"):
+                    if st.button("📤 Envoyer le lien à votre locataire", key="send_email"):
                             with st.spinner("📨 Envoi de l'email en cours..."):
                                 try:
                                     owner_info = reservation_details.get("Propriétaire", "Propriétaire inconnu")
