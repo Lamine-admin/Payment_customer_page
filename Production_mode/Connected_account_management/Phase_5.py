@@ -19,9 +19,6 @@ import logging
 import sys
 from urllib.parse import quote
 
-# from connected_accounts_list import connected_accounts
-
-
 
 # 🔹 Logger configuration
 logger = logging.getLogger("ConsoleLogger")
@@ -474,7 +471,7 @@ def main():
                 ''', unsafe_allow_html=True)
 
                 st.markdown("---")
-                st.markdown("### 🛡️ Souscrire à la protection complète Cartage ?")
+                st.markdown("### 🛡️ Finaliser votre réservation en souscrivant à la protection complémentaire obligatoire Cartage !")
                 st.markdown(f'''
                             <div style="margin-bottom:1em;">
                                 <div><strong>Montant de votre protection complète Cartage : {cartage_price:.2f} €</strong></div>
