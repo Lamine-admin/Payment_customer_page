@@ -445,12 +445,15 @@ def main():
                         st.error(f"Erreur lors du calcul du tarif : {e}")
                         return
 
+                    initials = get_seller_initials(reference)
+                    account = st.secrets["connected_accounts"][initials]
+                    commission_rate = account.get("commission_rate", 0.1)  # 0.1 par défaut si absent
                     payment_link = create_payment_link(
                         reference=reservation_details['Référence'],
                         product_price=product_price - cartage_price,
                         quantity=quantity,
                         cartage_price=cartage_price,
-                        commission_rate=0.1
+                        commission_rate=commission_rate
                     )
 
             if payment_link:
