@@ -433,9 +433,9 @@ def main():
                     with col2:
                         st.write("#### 📅 Détails de Location")
                         st.write(f"- **Début:** {reservation_details['Début']}")
-                        st.write(f("- **Fin:** {reservation_details['Fin']}")
-                        st.write(f("- **Durée:** {reservation_details['Durée']}")
-                        st.write(f("- **Tarif:** {reservation_details['Tarif']}")
+                        st.write(f"- **Fin:** {reservation_details['Fin']}")
+                        st.write(f"- **Durée:** {reservation_details['Durée']}")
+                        st.write(f"- **Tarif:** {reservation_details['Tarif']}")
 
                 # 🔹 Calculs et lien de paiement
                 try:
