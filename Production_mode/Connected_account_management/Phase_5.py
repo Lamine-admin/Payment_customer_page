@@ -448,13 +448,24 @@ def main():
                     initials = get_seller_initials(reference)
                     account = st.secrets["connected_accounts"][initials]
                     commission_rate = account.get("commission_rate", 0.1)  # 0.1 par défaut si absent
-                    payment_link = create_payment_link(
-                        reference=reservation_details['Référence'],
-                        product_price=product_price - cartage_price,
-                        quantity=quantity,
-                        cartage_price=cartage_price,
-                        commission_rate=commission_rate
-                    )
+
+                    # 🔹 Correction du bug Stripe "Invalid non-negative integer"
+                    # Ce bug apparaît si le montant envoyé à Stripe n'est pas un entier positif (ex : 0, négatif ou float).
+                    # Vérifiez que product_price, cartage_price, commission_rate, etc. sont bien des nombres valides et positifs.
+
+                    # Exemple de correction pour la ligne problématique :
+                    payment_link = None  # Initialisation par défaut
+
+                    if product_price - cartage_price > 0:
+                        payment_link = create_payment_link(
+                            reference=reservation_details['Référence'],
+                            product_price=product_price - cartage_price,
+                            quantity=quantity,
+                            cartage_price=cartage_price,
+                            commission_rate=commission_rate
+                        )
+                    else:
+                        st.error("❌ Le montant à régler doit être strictement positif. Vérifiez les données de la réservation.")
 
             if payment_link:
                 st.session_state.payment_link = payment_link
