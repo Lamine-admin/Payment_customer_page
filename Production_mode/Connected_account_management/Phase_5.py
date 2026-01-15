@@ -449,10 +449,19 @@ def main():
 
                 initials = get_seller_initials(reference)
                 account = st.secrets["connected_accounts"][initials]
-                commission_rate = account.get("commission_rate", 0.1)  # 0.1 par défaut si absent
+                # Correction : bien récupérer et caster commission_rate
+                try:
+                    commission_rate = float(account.get("commission_rate", 0.1))
+                except Exception:
+                    commission_rate = 0.1  # fallback si la valeur est mal formatée
 
                 # Correction du bug Stripe "Invalid non-negative integer"
-                if product_price is not None and cartage_price is not None and (product_price - cartage_price) > 0:
+                if (
+                    product_price is not None
+                    and cartage_price is not None
+                    and (product_price - cartage_price) > 0
+                    and commission_rate > 0
+                ):
                     payment_link = create_payment_link(
                         reference=reservation_details['Référence'],
                         product_price=product_price - cartage_price,
@@ -461,7 +470,7 @@ def main():
                         commission_rate=commission_rate
                     )
                 else:
-                    st.error("❌ Le montant à régler doit être strictement positif. Vérifiez les données de la réservation.")
+                    st.error("❌ Le montant à régler ou la commission doivent être strictement positifs. Vérifiez les données de la réservation.")
                     payment_link = None
 
             # Affichage du lien uniquement si défini
