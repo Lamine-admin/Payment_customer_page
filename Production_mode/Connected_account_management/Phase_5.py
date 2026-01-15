@@ -412,10 +412,9 @@ def main():
             st.session_state.last_reference = reference
             st.session_state.nom_famille = nom_famille
 
-            with st.spinner("Génération du lien de paiement en cours (temps estimé : 30 secondes)..."):
+            with st.spinner("Génération du lien de paiement en cours (temps estimé : 20 secondes)..."):
                 reservation_details, errors = fetch_reservation_details(reference)
-                get_tenant_info(reservation_details['Locataire'])
-                tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
+                payment_link = None
                 if reservation_details and nom_famille.lower() in reservation_details['Locataire'].lower():
                     st.session_state.reservation_details = reservation_details
 
@@ -499,9 +498,9 @@ def main():
                             <div style="border:1px solid #ccc; padding:1rem; border-radius:8px; background-color:#f9f9f9;">
                                 <p><strong>Informations à renseigner :</strong></p>
                                 <ul>
-                                    <li><strong>Infos Client :</strong>
+                                    <li><strong>1. Infos Client :</strong>
                                         <ul>
-                                            <li>1. Renseigner vos informations personnelles (prénom, nom, email, date de naissance et code postal)</li>
+                                            <li>Renseigner vos informations personnelles (prénom, nom, email, date de naissance et code postal)</li>
                                         </ul>
                                     </li>
                                     <li><strong>2. Infos Véhicule :</strong>
