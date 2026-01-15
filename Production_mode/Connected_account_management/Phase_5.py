@@ -414,7 +414,8 @@ def main():
 
             with st.spinner("Génération du lien de paiement en cours (temps estimé : 30 secondes)..."):
                 reservation_details, errors = fetch_reservation_details(reference)
-
+                get_tenant_info(reservation_details['Locataire'])
+                tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
                 if reservation_details and nom_famille.lower() in reservation_details['Locataire'].lower():
                     st.session_state.reservation_details = reservation_details
 
@@ -491,40 +492,32 @@ def main():
                                 <div><strong>Montant de votre protection complète Cartage : {cartage_price:.2f} €</strong></div>
                             </div>
                             ''', unsafe_allow_html=True)
-                if st.button("Générer les informations à renseigner pour votre protection complète Cartage"):
-                    with st.spinner("Génération des informations de la protection complète Cartage à renseigner (temps estimé : 30 secondes)..."):
-                        tenant_info, info_errors = get_tenant_info(reservation_details['Locataire'])
 
-                        if tenant_info:
-                            cartage_start_url = "https://app.cartage.club/share?source=cartage-home-header"
-                            st.markdown("### 🔗 Formulaire protection sur-assurance Cartage")
-                            st.markdown(f'''
+                cartage_start_url = "https://app.cartage.club/share?source=cartage-home-header"
+                st.markdown("### 🔗 Formulaire protection sur-assurance Cartage")
+                st.markdown(f'''
                             <div style="border:1px solid #ccc; padding:1rem; border-radius:8px; background-color:#f9f9f9;">
-                                <p><strong>1. Informations à renseigner :</strong></p>
+                                <p><strong>Informations à renseigner :</strong></p>
                                 <ul>
                                     <li><strong>Infos Client :</strong>
                                         <ul>
-                                            <li>Prénom : {tenant_info['prenom']}</li>
-                                            <li>Nom : {tenant_info['nom']}</li>
-                                            <li>Email : {tenant_info['email']}</li>
-                                            <li>Date de naissance : {tenant_info['date_de_naissance']}</li>
-                                            <li>Téléphone : {tenant_info['telephone']}</li>
+                                            <li>1. Renseigner vos informations personnelles (prénom, nom, email, date de naissance et code postal)</li>
                                         </ul>
                                     </li>
-                                    <li><strong>Infos Véhicule :</strong>
+                                    <li><strong>2. Infos Véhicule :</strong>
                                         <ul>
                                             <li>Plaque d'immatriculation : {reservation_details.get('Plaque', 'N/A')}</li>
                                             <li>Marque : {reservation_details.get('Marque', 'N/A')}</li>
                                             <li>Modèle : {reservation_details.get('Modèle', 'N/A')}</li>
                                         </ul>
                                     </li>
-                                    <li><strong>Infos Propriétaire :</strong>
+                                    <li><strong>3. Infos Propriétaire :</strong>
                                         <ul>
                                             <li>Prénom et NOM : {reservation_details['Propriétaire']}</li>
                                             <li>Email : contact@malovelycar.com</li>
                                         </ul>
                                     </li>
-                                    <li><strong>Infos Dates :</strong>
+                                    <li><strong>4. Infos Dates :</strong>
                                         <ul>
                                             <li>Début : {reservation_details['Début']}</li>
                                             <li>Durée : {reservation_details['Durée']}</li>
@@ -543,10 +536,6 @@ def main():
                                 </div>
                             </div>
                             ''', unsafe_allow_html=True)
-                        else:
-                            st.error("❌ Impossible de récupérer les informations du client.")
-                            for err in info_errors:
-                                st.warning(err)
 
 if __name__ == "__main__":
     main()
