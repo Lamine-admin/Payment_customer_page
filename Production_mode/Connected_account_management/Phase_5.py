@@ -409,87 +409,90 @@ def main():
 
     # 🔹 Traitement après clic
     if st.session_state.bouton_recherche:
-        st.session_state.last_reference = reference
-        st.session_state.nom_famille = nom_famille
+            st.session_state.last_reference = reference
+            st.session_state.nom_famille = nom_famille
 
-        with st.spinner("Génération du lien de paiement en cours (temps estimé : 20 secondes)..."):
-            reservation_details, errors = fetch_reservation_details(reference)
-            payment_link = None  # Toujours initialiser AVANT tout usage
-            product_price = None
-            cartage_price = None
+            with st.spinner("Génération du lien de paiement en cours (temps estimé : 20 secondes)..."):
+                reservation_details, errors = fetch_reservation_details(reference)
+            # payment_link = None  # Toujours initialiser AVANT tout usage
+            # product_price = None
+            # cartage_price = None
             if reservation_details and nom_famille.lower() in reservation_details['Locataire'].lower():
-                st.session_state.reservation_details = reservation_details
+                    st.session_state.reservation_details = reservation_details
 
-                with st.container():
-                    st.markdown("### 📋 Détails de votre Réservation")
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        st.write("#### 🚘 Informations Principales")
-                        st.write(f"- **Référence :** {reservation_details['Référence']}")
-                        st.write(f"- **Statut :** {reservation_details['Statut']}")
-                        st.write(f"- **Véhicule :** {reservation_details['Bien']}")
-                        st.write(f"- **Propriétaire :** {reservation_details['Propriétaire']}")
-                        st.write(f"- **Locataire :** {reservation_details['Locataire']}")
-                    with col2:
-                        st.write("#### 📅 Détails de Location")
-                        st.write(f"- **Début:** {reservation_details['Début']}")
-                        st.write(f"- **Fin:** {reservation_details['Fin']}")
-                        st.write(f"- **Durée:** {reservation_details['Durée']}")
-                        st.write(f"- **Tarif:** {reservation_details['Tarif']}")
+                    with st.container():
+                        st.markdown("### 📋 Détails de votre Réservation")
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.write("#### 🚘 Informations Principales")
+                            st.write(f"- **Référence :** {reservation_details['Référence']}")
+                            st.write(f"- **Statut :** {reservation_details['Statut']}")
+                            st.write(f"- **Véhicule :** {reservation_details['Bien']}")
+                            st.write(f"- **Propriétaire :** {reservation_details['Propriétaire']}")
+                            st.write(f"- **Locataire :** {reservation_details['Locataire']}")
+                        with col2:
+                            st.write("#### 📅 Détails de Location")
+                            st.write(f"- **Début:** {reservation_details['Début']}")
+                            st.write(f"- **Fin:** {reservation_details['Fin']}")
+                            st.write(f"- **Durée:** {reservation_details['Durée']}")
+                            st.write(f"- **Tarif:** {reservation_details['Tarif']}")
 
                 # 🔹 Calculs et lien de paiement
-                try:
-                    days_number = int(reservation_details['Durée'].replace(" jours", "").strip())
-                    cartage_price = days_number * 5
-                    product_price = abs(float(reservation_details['Balance'].replace("€", "").replace(",", ".").strip()))
-                    quantity = 1
-                except ValueError as e:
-                    st.error(f"Erreur lors du calcul du tarif : {e}")
-                    payment_link = None
+                    try:
+                        days_number = int(reservation_details['Durée'].replace(" jours", "").strip())
+                        cartage_price = days_number * 5
+                        product_price = abs(float(reservation_details['Balance'].replace("€", "").replace(",", ".").strip()))
+                        quantity = 1
+                    except ValueError as e:
+                        st.error(f"Erreur lors du calcul du tarif : {e}")
+                        return
+                #     payment_link = None
 
-                initials = get_seller_initials(reference)
-                account = st.secrets["connected_accounts"][initials]
-                # Correction : bien récupérer et caster commission_rate
-                try:
-                    commission_rate = float(account.get("commission_rate", 0.1))
-                except Exception:
-                    commission_rate = 0.1  # fallback si la valeur est mal formatée
+                # initials = get_seller_initials(reference)
+                # account = st.secrets["connected_accounts"][initials]
+                # # Correction : bien récupérer et caster commission_rate
+                # try:
+                #     commission_rate = float(account.get("commission_rate", 0.1))
+                # except Exception:
+                #     commission_rate = 0.1  # fallback si la valeur est mal formatée
 
-                # Correction du bug Stripe "Invalid non-negative integer"
-                if (
-                    product_price is not None
-                    and cartage_price is not None
-                    and (product_price - cartage_price) > 0
-                    and commission_rate > 0
-                ):
+                # # Correction du bug Stripe "Invalid non-negative integer"
+                # if (
+                #     product_price is not None
+                #     and cartage_price is not None
+                #     and (product_price - cartage_price) > 0
+                #     and commission_rate > 0
+                # ):
                     payment_link = create_payment_link(
                         reference=reservation_details['Référence'],
                         product_price=product_price - cartage_price,
                         quantity=quantity,
                         cartage_price=cartage_price,
-                        commission_rate=commission_rate
+                        commission_rate=0.1
                     )
-                else:
-                    st.error("❌ Le montant à régler ou la commission doivent être strictement positifs. Vérifiez les données de la réservation.")
-                    payment_link = None
+            #             commission_rate=commission_rate
+            #         )
+            #     else:
+            #         st.error("❌ Le montant à régler ou la commission doivent être strictement positifs. Vérifiez les données de la réservation.")
+            #         payment_link = None
 
-            # Affichage du lien uniquement si défini
-            if payment_link:
-                st.session_state.payment_link = payment_link
-                st.markdown(f"### Montant de la réservation à régler : {abs(product_price- cartage_price):.2f} €")
-                safe_payment_link = quote(payment_link, safe=':/?&=')
+            # # Affichage du lien uniquement si défini
+            # if payment_link:
+            #     st.session_state.payment_link = payment_link
+            #     st.markdown(f"### Montant de la réservation à régler : {abs(product_price- cartage_price):.2f} €")
+            #     safe_payment_link = quote(payment_link, safe=':/?&=')
 
-                st.markdown(f'''
-                <div style="margin-bottom:1em;">
-                    <div>
-                        <a href="{safe_payment_link}" target="_blank">
-                        <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
-                            Payer ma réservation
-                        </button>
-                        </a>
-                    </div>
-                </div>
-                ''', unsafe_allow_html=True)
+            #     st.markdown(f'''
+            #     <div style="margin-bottom:1em;">
+            #         <div>
+            #             <a href="{safe_payment_link}" target="_blank">
+            #             <button style="background-color:#8F93FF; color:white; padding:0.75rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer;">
+            #                 Payer ma réservation
+            #             </button>
+            #             </a>
+            #         </div>
+            #     </div>
+            #     ''', unsafe_allow_html=True)
 
             if payment_link:
                 st.session_state.payment_link = payment_link
