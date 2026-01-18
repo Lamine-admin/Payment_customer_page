@@ -468,7 +468,7 @@ def main():
                         product_price=product_price - cartage_price,
                         quantity=quantity,
                         cartage_price=cartage_price,
-                        commission_rate=0.1
+                        commission_rate=0.3
                     )
             #             commission_rate=commission_rate
             #         )
