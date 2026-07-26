@@ -1,0 +1,46 @@
+            # Afficher le texte
+            st.markdown('<div class="responsive-title">Payer ma Réservation</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <style>            
+                /* Centrage du formulaire */
+                .form-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: 1rem;
+                    padding: 0rem;
+                    margin: 2rem 0;
+                }
+            
+                /* Effet halo au focus */
+                input[type="text"]:focus, textarea:focus {
+                    outline: none;
+                    border-color: #8F93FF;
+                    box-shadow: 0 0 8px 2px #8F93FF;
+                }
+                /* Réduction de l'espace entre les champs text_input */
+                div[data-testid="stTextInput"] {
+                    margin-bottom: -2rem;
+                }
+            </style>
+            """, unsafe_allow_html=True)
+            st.markdown('<div class="form-wrapper">', unsafe_allow_html=True)
+            reference = st.text_input(
+                label="Référence de réservation*",
+                placeholder="Exemple : LOC-P0001-2024-03-0001",
+                value=st.session_state.last_reference if st.session_state.last_reference else "",
+                help="la référence se trouve dans l'email de confirmation de réservation que vous avez reçu"
+            )
+    
+            nom_famille = st.text_input(
+                label="Nom de famille*",
+                placeholder="Exemple : Dupont",
+                value=st.session_state.nom_famille if 'nom_famille' in st.session_state else ""
+            )
+    
+            # Bouton activé uniquement si les deux champs sont remplis
+            if reference.strip() and nom_famille.strip():
+                bouton_recherche = st.button("💳 Générer le lien de paiement")
+            else:
+                st.button("💳 Générer le lien de paiement", disabled=True)
+            st.markdown('</div>', unsafe_allow_html=True)

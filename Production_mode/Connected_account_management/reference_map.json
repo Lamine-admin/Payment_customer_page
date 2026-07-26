@@ -1,0 +1,564 @@
+{
+  "LOC-P0002-2026-06-0013": {
+    "fleetee_reference": "LOC-C01-2026-06-0013",
+    "booking_id": 485848,
+    "vehicle_id": 41965
+  },
+  "LOC-P0013-2026-06-0014": {
+    "fleetee_reference": "LOC-C01-2026-06-0014",
+    "booking_id": 485850,
+    "vehicle_id": 51551
+  },
+  "LOC-P0033-2026-06-0015": {
+    "fleetee_reference": "LOC-C01-2026-06-0015",
+    "booking_id": 485852,
+    "vehicle_id": 51551
+  },
+  "LOC-P0033-2026-06-0016": {
+    "fleetee_reference": "LOC-C01-2026-06-0016",
+    "booking_id": 485856,
+    "vehicle_id": 51551
+  },
+  "LOC-P0033-2026-06-0017": {
+    "fleetee_reference": "LOC-C01-2026-06-0017",
+    "booking_id": 485961,
+    "vehicle_id": 51551
+  },
+  "LOC-P0033-2026-06-0018": {
+    "fleetee_reference": "LOC-C01-2026-06-0018",
+    "booking_id": 485961,
+    "vehicle_id": 51551
+  },
+  "LOC-P0001-2026-06-0009": {
+    "fleetee_reference": "LOC-P0001-2026-06-0009",
+    "booking_id": 484230,
+    "vehicle_id": 41965
+  },
+  "LOC-P0022-2026-06-0006": {
+    "fleetee_reference": "LOC-C05-2026-06-0006",
+    "booking_id": 486521,
+    "vehicle_id": 47043
+  },
+  "LOC-P0022-2026-06-0007": {
+    "fleetee_reference": "LOC-C05-2026-06-0005",
+    "booking_id": 486516,
+    "vehicle_id": 47043
+  },
+  "LOC-P0030-2026-06-0005": {
+    "fleetee_reference": "LOC-P0030-2026-06-0005",
+    "booking_id": 486985,
+    "vehicle_id": 49914
+  },
+  "LOC-P0022-2026-06-0008": {
+    "fleetee_reference": "LOC-C05-2026-06-0007",
+    "booking_id": 487435,
+    "vehicle_id": 47043
+  },
+  "LOC-P0022-2026-06-0009": {
+    "fleetee_reference": "LOC-P0022-2026-06-0009",
+    "booking_id": 493788,
+    "vehicle_id": 47043
+  },
+  "LOC-P0030-2026-06-0006": {
+    "fleetee_reference": "LOC-P0030-2026-06-0006",
+    "booking_id": 488012,
+    "vehicle_id": 49914
+  },
+  "LOC-P0001-2026-06-0020": {
+    "fleetee_reference": "LOC-C01-2026-06-0020",
+    "booking_id": 488179,
+    "vehicle_id": 41965
+  },
+  "LOC-P0013-2026-06-0004": {
+    "fleetee_reference": "LOC-P0022-2026-06-0002",
+    "booking_id": 488429,
+    "vehicle_id": 34883
+  },
+  "LOC-P0013-2026-06-0009": {
+    "fleetee_reference": "LOC-C05-2026-06-0009",
+    "booking_id": 488429,
+    "vehicle_id": 34883
+  },
+  "LOC-P0022-2026-06-0010": {
+    "fleetee_reference": "LOC-C07-2026-06-0010",
+    "booking_id": 488429,
+    "vehicle_id": 47043
+  },
+  "LOC-P0005-2026-06-0009": {
+    "fleetee_reference": "LOC-C03-2026-06-0004",
+    "booking_id": 488496,
+    "vehicle_id": 45438
+  },
+  "LOC-P0005-2026-06-0010": {
+    "fleetee_reference": "LOC-P0005-2026-06-0010",
+    "booking_id": 494198,
+    "vehicle_id": 45438
+  },
+  "LOC-P0002-2026-06-0005": {
+    "fleetee_reference": "LOC-C04-2026-06-0004",
+    "booking_id": 488536,
+    "vehicle_id": 35172
+  },
+  "LOC-P0022-2026-06-0022": {
+    "fleetee_reference": "LOC-C01-2026-06-0022",
+    "booking_id": 489642,
+    "vehicle_id": 47043
+  },
+  "LOC-P0013-2026-06-0006": {
+    "fleetee_reference": "LOC-P0013-2026-06-0006",
+    "booking_id": 489841,
+    "vehicle_id": 34883
+  },
+  "LOC-P0029-2026-06-0004": {
+    "fleetee_reference": "LOC-P0029-2026-06-0004",
+    "booking_id": 489817,
+    "vehicle_id": 50830
+  },
+  "LOC-P0005-2026-06-0011": {
+    "fleetee_reference": "LOC-C03-2026-06-0006",
+    "booking_id": 489918,
+    "vehicle_id": 45438
+  },
+  "LOC-P0005-2026-06-0012": {
+    "fleetee_reference": "LOC-C03-2026-06-0008",
+    "booking_id": 490189,
+    "vehicle_id": 42404
+  },
+  "LOC-P0022-2026-06-0011": {
+    "fleetee_reference": "LOC-C05-2026-06-0011",
+    "booking_id": 490238,
+    "vehicle_id": 47043
+  },
+  "LOC-P0005-2026-06-0013": {
+    "fleetee_reference": "LOC-C01-2026-06-0002",
+    "booking_id": 491090,
+    "vehicle_id": 42404
+  },
+  "LOC-P0006-2026-06-0001": {
+    "fleetee_reference": "LOC-P0006-2026-06-0001",
+    "booking_id": 491189,
+    "vehicle_id": 34876
+  },
+  "LOC-P0025-2026-06-0002": {
+    "fleetee_reference": "LOC-C05-2026-06-0001",
+    "booking_id": 491184,
+    "vehicle_id": 49774
+  },
+  "LOC-P0033-2026-06-0004": {
+    "fleetee_reference": "LOC-C01-2026-06-0004",
+    "booking_id": 492195,
+    "vehicle_id": 51551
+  },
+  "LOC-P0030-2026-06-0007": {
+    "fleetee_reference": "LOC-P0030-2026-06-0007",
+    "booking_id": 493038,
+    "vehicle_id": 49914
+  },
+  "LOC-P0034-2026-06-0001": {
+    "fleetee_reference": "LOC-P0034-2026-06-0001",
+    "booking_id": 492752,
+    "vehicle_id": 51552
+  },
+  "LOC-P0023-2026-06-0004": {
+    "fleetee_reference": "LOC-P0023-2026-06-0004",
+    "booking_id": 493597,
+    "vehicle_id": 42014
+  },
+  "LOC-P0005-2026-06-0014": {
+    "fleetee_reference": "LOC-C05-2026-06-0002",
+    "booking_id": 493370,
+    "vehicle_id": 45438
+  },
+  "LOC-P0030-2026-06-0008": {
+    "fleetee_reference": "LOC-P0030-2026-06-0008",
+    "booking_id": 493980,
+    "vehicle_id": 50829
+  },
+  "LOC-P0005-2026-06-0015": {
+    "fleetee_reference": "LOC-C05-2026-06-0010",
+    "booking_id": 494198,
+    "vehicle_id": 45438
+  },
+  "LOC-P0025-2026-06-0013": {
+    "fleetee_reference": "LOC-C05-2026-06-0013",
+    "booking_id": 494364,
+    "vehicle_id": 49774
+  },
+  "LOC-P0005-2026-06-0016": {
+    "fleetee_reference": "LOC-C05-2026-06-0012",
+    "booking_id": 494362,
+    "vehicle_id": 45438
+  },
+  "LOC-P0005-2026-06-0017": {
+    "fleetee_reference": "LOC-C05-2026-06-0014",
+    "booking_id": 494443,
+    "vehicle_id": 45438
+  },
+  "LOC-P0030-2026-07-0001": {
+    "fleetee_reference": "LOC-P0030-2026-07-0001",
+    "booking_id": 494490,
+    "vehicle_id": 49914
+  },
+  "LOC-P0019-2026-07-0001": {
+    "fleetee_reference": "LOC-C01-2026-07-0001",
+    "booking_id": 494597,
+    "vehicle_id": 45629
+  },
+  "LOC-P0023-2026-06-0005": {
+    "fleetee_reference": "LOC-P0023-2026-06-0005",
+    "booking_id": 493597,
+    "vehicle_id": 42014
+  },
+  "LOC-P0033-2026-07-0001": {
+    "fleetee_reference": "LOC-C05-2026-07-0001",
+    "booking_id": 494769,
+    "vehicle_id": 51551
+  },
+  "LOC-P0015-2026-07-0001": {
+    "fleetee_reference": "LOC-P0015-2026-07-0001",
+    "booking_id": 495162,
+    "vehicle_id": 43253
+  },
+  "LOC-P0002-2026-07-0001": {
+    "fleetee_reference": "LOC-P0002-2026-07-0001",
+    "booking_id": 506437,
+    "vehicle_id": 46854,
+    "amount_billed": 210.0,
+    "payment_link_id": "plink_1TuTUbRcg8bZ8m353roJj1sk"
+  },
+  "LOC-P0030-2026-07-0002": {
+    "fleetee_reference": "LOC-P0030-2026-07-0002",
+    "booking_id": 496005,
+    "vehicle_id": 49914
+  },
+  "LOC-P0015-2026-07-0002": {
+    "fleetee_reference": "LOC-P0015-2026-07-0002",
+    "booking_id": 495973,
+    "vehicle_id": 43253
+  },
+  "LOC-P0025-2026-07-0002": {
+    "fleetee_reference": "LOC-C05-2026-07-0002",
+    "booking_id": 496078,
+    "vehicle_id": 49774
+  },
+  "LOC-P0005-2026-07-0001": {
+    "fleetee_reference": "LOC-C03-2026-07-0001",
+    "booking_id": 496123,
+    "vehicle_id": 42404
+  },
+  "LOC-P0023-2026-07-0001": {
+    "fleetee_reference": "LOC-P0023-2026-07-0001",
+    "booking_id": 496696,
+    "vehicle_id": 47832
+  },
+  "LOC-P0015-2026-07-0003": {
+    "fleetee_reference": "LOC-P0015-2026-07-0003",
+    "booking_id": 496868,
+    "vehicle_id": 43253
+  },
+  "LOC-P0033-2026-07-0003": {
+    "fleetee_reference": "LOC-C05-2026-07-0003",
+    "booking_id": 497166,
+    "vehicle_id": 51551
+  },
+  "LOC-P0022-2026-07-0004": {
+    "fleetee_reference": "LOC-C05-2026-07-0004",
+    "booking_id": 497228,
+    "vehicle_id": 47043
+  },
+  "LOC-P0001-2026-07-0003": {
+    "fleetee_reference": "LOC-C01-2026-07-0003",
+    "booking_id": 496981,
+    "vehicle_id": 41965
+  },
+  "LOC-P0001-2026-07-0004": {
+    "fleetee_reference": "LOC-C04-2026-07-0003",
+    "booking_id": 497425,
+    "vehicle_id": 41965,
+    "amount_billed": 130.0
+  },
+  "LOC-P0033-2026-07-0005": {
+    "fleetee_reference": "LOC-C05-2026-07-0005",
+    "booking_id": 497556,
+    "vehicle_id": 51551,
+    "amount_billed": 105.0,
+    "payment_link_id": "plink_1TtVVNDAT8R0CtRamp7EIVJe"
+  },
+  "LOC-P0006-2026-07-0001": {
+    "fleetee_reference": "LOC-P0006-2026-07-0001",
+    "booking_id": 498769,
+    "vehicle_id": 35697
+  },
+  "LOC-P0022-2026-07-0006": {
+    "fleetee_reference": "LOC-C05-2026-07-0006",
+    "booking_id": 498078,
+    "vehicle_id": 47043,
+    "amount_billed": 310.0
+  },
+  "LOC-P0025-2026-07-0007": {
+    "fleetee_reference": "LOC-C05-2026-07-0007",
+    "booking_id": 498848,
+    "vehicle_id": 49774
+  },
+  "LOC-P0033-2026-07-0008": {
+    "fleetee_reference": "LOC-C05-2026-07-0008",
+    "booking_id": 499019,
+    "vehicle_id": 51551
+  },
+  "LOC-P0022-2026-07-0010": {
+    "fleetee_reference": "LOC-C05-2026-07-0010",
+    "booking_id": 499452,
+    "vehicle_id": 47043
+  },
+  "LOC-P0022-2026-07-0009": {
+    "fleetee_reference": "LOC-C05-2026-07-0009",
+    "booking_id": 499431,
+    "vehicle_id": 47043
+  },
+  "LOC-P0019-2026-07-0003": {
+    "fleetee_reference": "LOC-C03-2026-07-0003",
+    "booking_id": 499747,
+    "vehicle_id": 45629,
+    "amount_billed": 130.0
+  },
+  "LOC-P0005-2026-07-0004": {
+    "fleetee_reference": "LOC-C03-2026-07-0004",
+    "booking_id": 500173,
+    "vehicle_id": 42404
+  },
+  "LOC-P0030-2026-07-0002-EXT1": {
+    "fleetee_reference": "LOC-P0030-2026-07-0002",
+    "booking_id": 496005,
+    "vehicle_id": 49914,
+    "is_extension": true,
+    "extension_balance": 35.0,
+    "extension_end_date": "2026-07-10 19:30"
+  },
+  "LOC-P0033-2026-07-00005": {
+    "fleetee_reference": "LOC-C05-2026-07-00005",
+    "booking_id": 497556,
+    "vehicle_id": 51551,
+    "amount_billed": 310.0,
+    "payment_link_id": "plink_1TrFyDDAT8R0CtRaKPwHT5np"
+  },
+  "LOC-P0005-2026-07-0004-EXT1": {
+    "fleetee_reference": "LOC-C03-2026-07-0004",
+    "booking_id": 500173,
+    "vehicle_id": 42404,
+    "is_extension": true,
+    "extension_balance": 25.0,
+    "extension_end_date": "2026-07-10 19:00",
+    "amount_billed": 25.0,
+    "payment_link_id": "plink_1TrN3pRnIpg8KS7AOJRaZqw9"
+  },
+  "LOC-P0014-2026-07-0001": {
+    "fleetee_reference": "LOC-P0014-2026-07-0001",
+    "booking_id": 501228,
+    "vehicle_id": 42325,
+    "amount_billed": 300.0,
+    "payment_link_id": "plink_1TrPXfD8b0dvW6S9AiDV7ExX"
+  },
+  "LOC-P0013-2026-07-0001": {
+    "fleetee_reference": "LOC-P0013-2026-07-0001",
+    "booking_id": 501553,
+    "vehicle_id": 34883,
+    "amount_billed": 54.0,
+    "payment_link_id": "plink_1TrcQ6D053fnIrlkgvoaTseC"
+  },
+  "LOC-P0002-2026-07-0001-EXT1": {
+    "fleetee_reference": "LOC-C04-2026-07-0001",
+    "booking_id": 495772,
+    "vehicle_id": 35172,
+    "is_extension": true,
+    "extension_balance": 30.0,
+    "extension_end_date": "2026-07-10 19:00",
+    "amount_billed": 30.0,
+    "payment_link_id": null
+  },
+  "LOC-P0002-2026-07-0001-EXT2": {
+    "fleetee_reference": "LOC-C04-2026-07-0001",
+    "booking_id": 495772,
+    "vehicle_id": 35172,
+    "is_extension": true,
+    "extension_balance": 195.0,
+    "extension_end_date": "2026-07-18 19:00",
+    "amount_billed": 195.0,
+    "payment_link_id": "plink_1TrfCuRcg8bZ8m35oSX18Fkj"
+  },
+  "LOC-P0019-2026-07-0003-EXT1": {
+    "fleetee_reference": "LOC-C03-2026-07-0003",
+    "booking_id": 499747,
+    "vehicle_id": 45629,
+    "is_extension": true,
+    "extension_balance": 65.0,
+    "extension_end_date": "2026-07-12 23:30",
+    "amount_billed": 65.0,
+    "payment_link_id": "plink_1TrgSrDzsmr0ddUk2RTkgP1r"
+  },
+  "LOC-P0005-2026-07-0007": {
+    "fleetee_reference": "LOC-C03-2026-07-0007",
+    "booking_id": 501862,
+    "vehicle_id": 42404,
+    "amount_billed": 50.0,
+    "payment_link_id": "plink_1TrkoORnIpg8KS7AsQTN6EKk"
+  },
+  "LOC-P0001-2026-07-0007": {
+    "fleetee_reference": "LOC-C01-2026-07-0007",
+    "booking_id": 502564,
+    "vehicle_id": 41965,
+    "amount_billed": 310.0,
+    "payment_link_id": "plink_1TsJJlRfK7R7sZemzo2i4UOv"
+  },
+  "LOC-P0005-2026-07-0006": {
+    "fleetee_reference": "LOC-C03-2026-07-0006",
+    "booking_id": 501857,
+    "vehicle_id": 42404,
+    "amount_billed": 60.0,
+    "payment_link_id": "plink_1TsQ3hRnIpg8KS7A07pE6HUz"
+  },
+  "LOC-P0022-2026-07-0013": {
+    "fleetee_reference": "LOC-C05-2026-07-0013",
+    "booking_id": 503704,
+    "vehicle_id": 47043,
+    "amount_billed": 35.0,
+    "payment_link_id": "plink_1Tt1xgRhuTHq9va7Ot21n71y"
+  },
+  "LOC-P0033-2026-07-0014": {
+    "fleetee_reference": "LOC-C05-2026-07-0014",
+    "booking_id": 503796,
+    "vehicle_id": 51551,
+    "amount_billed": 40.0,
+    "payment_link_id": "plink_1Tt68lDAT8R0CtRakTsWugbY"
+  },
+  "LOC-P0006-2026-07-0002": {
+    "fleetee_reference": "LOC-P0006-2026-07-0002",
+    "booking_id": 504528,
+    "vehicle_id": 35697,
+    "amount_billed": 80.0,
+    "payment_link_id": "plink_1TtW7vDASpz33R0oGLTQGSSm"
+  },
+  "LOC-P0030-2026-07-0003": {
+    "fleetee_reference": "LOC-P0030-2026-07-0003",
+    "booking_id": 504529,
+    "vehicle_id": 49914,
+    "amount_billed": 70.0,
+    "payment_link_id": "plink_1TtWOPDc6PPjwxrIEPR2eeF4"
+  },
+  "LOC-P0030-2026-07-0004": {
+    "fleetee_reference": "LOC-P0030-2026-07-0004",
+    "booking_id": 504689,
+    "vehicle_id": 49914,
+    "amount_billed": 332.0,
+    "payment_link_id": "plink_1TthBUDc6PPjwxrICMic3aJo"
+  },
+  "LOC-P0006-2026-07-0002-EXT1": {
+    "fleetee_reference": "LOC-P0006-2026-07-0002",
+    "booking_id": 504528,
+    "vehicle_id": 35697,
+    "is_extension": true,
+    "extension_balance": 50.0,
+    "extension_end_date": "2026-07-19 15:00",
+    "amount_billed": 50.0,
+    "payment_link_id": "plink_1TuVugDASpz33R0ozK0WG9XD"
+  },
+  "LOC-P0022-2026-07-0015": {
+    "fleetee_reference": "LOC-C05-2026-07-0015",
+    "booking_id": 507376,
+    "vehicle_id": 47043,
+    "amount_billed": 35.0,
+    "payment_link_id": "plink_1TvENPRhuTHq9va7srRxPnQP"
+  },
+  "LOC-P0030-2026-07-0005": {
+    "fleetee_reference": "LOC-P0030-2026-07-0005",
+    "booking_id": 507478,
+    "vehicle_id": 49914,
+    "amount_billed": 297.0,
+    "payment_link_id": "plink_1TvFvcDc6PPjwxrIEHPsMmBW"
+  },
+  "LOC-P0005-2026-07-0009": {
+    "fleetee_reference": "LOC-C01-2026-07-0009",
+    "booking_id": 507659,
+    "vehicle_id": 42404,
+    "amount_billed": 70.0,
+    "payment_link_id": "plink_1TvJQyRnIpg8KS7AJKrBWyVM"
+  },
+  "LOC-P0005-2026-07-0017": {
+    "fleetee_reference": "LOC-C05-2026-07-0017",
+    "booking_id": 508267,
+    "vehicle_id": 42404,
+    "amount_billed": 35.0,
+    "payment_link_id": "plink_1TveWZRnIpg8KS7A8reZxyiZ"
+  },
+  "LOC-P0005-2026-07-0010": {
+    "fleetee_reference": "LOC-C01-2026-07-0010",
+    "booking_id": 509164,
+    "vehicle_id": 42404,
+    "amount_billed": 60.0,
+    "payment_link_id": "plink_1Tw2MTRnIpg8KS7AHsDbMRez"
+  },
+  "LOC-P0005-2026-07-0017-EXT1": {
+    "fleetee_reference": "LOC-C05-2026-07-0017",
+    "booking_id": 508267,
+    "vehicle_id": 42404,
+    "is_extension": true,
+    "extension_balance": 35.0,
+    "extension_end_date": "2026-07-23 21:00",
+    "amount_billed": 35.0,
+    "payment_link_id": null
+  },
+  "LOC-P0022-2026-07-0019": {
+    "fleetee_reference": "LOC-C05-2026-07-0019",
+    "booking_id": 509307,
+    "vehicle_id": 47043,
+    "amount_billed": 35.0,
+    "payment_link_id": "plink_1TwCAIRhuTHq9va7vjsoP5m8"
+  },
+  "LOC-P0002-2026-07-0002": {
+    "fleetee_reference": "LOC-P0002-2026-07-0002",
+    "booking_id": 509598,
+    "vehicle_id": 35172,
+    "amount_billed": 50.0,
+    "payment_link_id": "plink_1TwK2fRcg8bZ8m35IOmeVoTi"
+  },
+  "LOC-P0005-2026-07-0017-EXT2": {
+    "fleetee_reference": "LOC-C05-2026-07-0017",
+    "booking_id": 508267,
+    "vehicle_id": 42404,
+    "is_extension": true,
+    "extension_balance": 35.0,
+    "extension_end_date": "2026-07-24 21:00",
+    "amount_billed": 35.0,
+    "payment_link_id": null
+  },
+  "LOC-P0002-2026-07-0003": {
+    "fleetee_reference": "LOC-P0002-2026-07-0003",
+    "booking_id": 510304,
+    "vehicle_id": 46854,
+    "amount_billed": 240.0,
+    "payment_link_id": "plink_1TwhXvRcg8bZ8m35ZbH0R324"
+  },
+  "LOC-P0025-2026-07-0021": {
+    "fleetee_reference": "LOC-C05-2026-07-0021",
+    "booking_id": 510596,
+    "vehicle_id": 49774,
+    "amount_billed": 60.0,
+    "payment_link_id": "plink_1TwnkdD59rkNvbcVtNEeHTsh"
+  },
+  "LOC-P0005-2026-07-0017-EXT3": {
+    "fleetee_reference": "LOC-C05-2026-07-0017",
+    "booking_id": 508267,
+    "vehicle_id": 42404,
+    "is_extension": true,
+    "extension_balance": 90.0,
+    "extension_end_date": "2026-07-27 21:00",
+    "amount_billed": 90.0,
+    "payment_link_id": "plink_1TwnklRnIpg8KS7AW9laLSmD"
+  },
+  "LOC-P0031-2026-07-0003": {
+    "fleetee_reference": "LOC-P0031-2026-07-0003",
+    "booking_id": 510631,
+    "vehicle_id": 51399,
+    "amount_billed": 160.43,
+    "payment_link_id": "plink_1Two3TRcQyCEsyhxPh0nqANZ"
+  }
+}

@@ -1,0 +1,38 @@
+# ════════════════════════════════════════════════════════════
+#  SECRETS — ne JAMAIS committer
+# ════════════════════════════════════════════════════════════
+.env
+*.env
+!.env.example
+service_account.json
+secrets.toml
+.streamlit/secrets.toml
+**/.streamlit/secrets.toml
+
+# Installateurs et gros binaires (retéléchargeables)
+*.exe
+*.msi
+
+# Sauvegardes automatiques
+*.bak
+*.bak_*
+
+# Caches Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logs et fichiers de debug
+*.log
+debug_*.png
+
+# Binaires retéléchargeables
+chromedriver-win64/
+chromedriver.exe
+ngrok.exe
+
+# Système
+.DS_Store
+Thumbs.db
+~$*
